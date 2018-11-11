@@ -25,7 +25,7 @@ class TeamsController < ApplicationController
   # POST /users
   # POST /users.json
   def create
-    @team = Team.new(user_params)
+    @team = Team.new(team_params)
 
     respond_to do |format|
       if @team.save
@@ -57,7 +57,7 @@ class TeamsController < ApplicationController
   def destroy
     @team.destroy
     respond_to do |format|
-      format.html { redirect_to users_url, notice: 'Team was successfully destroyed.' }
+      format.html { redirect_to teams_url, notice: 'Team was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
