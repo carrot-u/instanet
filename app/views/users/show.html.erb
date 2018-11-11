@@ -1,0 +1,64 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>First Name:</strong>
+  <%= @user.first_name %>
+</p>
+
+<p>
+  <strong>Last Name:</strong>
+  <%= @user.last_name %>
+</p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @user.title %>
+</p>
+
+<p>
+  <strong>Tier:</strong>
+  <%= @user.tier %>
+</p>
+
+<p>
+  <strong>team_id:</strong>
+  <%= @user.team_id %>
+</p>
+
+<p>
+  <strong>Email:</strong>
+  <%= @user.email %>
+</p>
+
+<p>
+  <strong>Slack:</strong>
+  <%= @user.slack %>
+</p>
+
+<p>
+  <strong>Bio:</strong>
+  <%= @user.bio %>
+</p>
+
+<p>
+  <strong>Is Manager?</strong>
+  <%= @user.is_manager %>
+</p>
+
+<p>
+  <strong>Active?</strong>
+  <%= @user.active %>
+</p>
+
+<p>
+  <strong>Manager ID:</strong>
+  <%= @user.manager_id %>
+</p>
+
+<p>
+  <strong>Started At:</strong>
+  <%= @user.started_at %>
+</p>
+
+<%= link_to 'Edit', edit_team_user_path(@team, @user) %> |
+<%= link_to 'Back', team_users_path %>

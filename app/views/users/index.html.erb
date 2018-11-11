@@ -1,0 +1,49 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Users</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>Title</th>
+      <th>Tier</th>
+      <th>Email</th>
+      <th>Slack</th>
+      <th>Bio</th>
+      <th>Is Manager?</th>
+      <th>Active?</th>
+      <th>Manager_id</th>
+      <th>Started At</th>
+      <th colspan="14"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @users.each do |user| %>
+      <tr>
+        <td><%= user.first_name %></td>
+        <td><%= user.last_name %></td>
+        <td><%= user.title %></td>
+        <td><%= user.tier %></td>
+        <td><%= user.email %></td>
+        <td><%= user.slack %></td>
+        <td><%= user.bio %></td>
+        <td><%= user.is_manager %></td>
+        <td><%= user.active %></td>
+        <td><%= user.manager_id %></td>
+        <td><%= user.started_at %></td>
+        <td><%= link_to 'Show', team_user_path(@team, user) %></td>
+        <td><%= link_to 'Edit', edit_team_user_path(@team, user) %></td>
+        <td><%= link_to 'Destroy', team_user_path(@team, user), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'Home', root_path %>
+<%= link_to 'Teams', teams_path %>
+<%= link_to 'New User', new_team_user_path %>
