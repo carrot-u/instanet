@@ -9,11 +9,10 @@ class User < ApplicationRecord
   validates :last_name, length: { minimum: 2 }
   validates :title, presence: true
   validates :title, length: { minimum: 2 }
-  validates :is_manager, presence: true
-  validates :active, presence: true
+  validates :is_manager, inclusion: { in: [ true, false ] }
+  validates :active, inclusion: { in: [ true, false ] }
 
   validates_associated :users
-  validates :manager, presence: true
   validates :team, presence: true
 
 end
