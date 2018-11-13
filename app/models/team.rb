@@ -6,11 +6,9 @@ class Team < ApplicationRecord
 
   validates :name, presence: true
   validates :name, length: { minimum: 2 }
-  validates :active, presence: true
-  validates :is_parent, presence: true
+  validates :active, inclusion: { in: [ true, false ] }
+  validates :is_parent, inclusion: { in: [ true, false ] }
 
   validates_associated :manager
-  validates :parent_team, presence: true
-
 
 end
