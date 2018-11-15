@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :set_user_deactivate, only: [:deactivate]
   before_action :set_team
 
   # GET /users
@@ -54,10 +55,26 @@ class UsersController < ApplicationController
     end
   end
 
+  def deactivate
+    respond_to do |format|
+      if @user.update(active: false)
+        format.html { redirect_to team_users_path(@team), notice: 'User was successfully deactivated.' }
+        format.json { render :show, status: :ok, location: @user }
+      else
+        format.html { render :edit }
+        format.json { render json: @user.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user
       @user = User.find(params[:id])
+    end
+
+    def set_user_deactivate
+      @user = User.find(params[:user_id])
     end
 
     def set_team
