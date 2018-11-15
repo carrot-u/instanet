@@ -2,5 +2,6 @@
 
 <%= render 'form', team: @team %>
 
+<%= link_to 'Deactivate', team_deactivate_path(@team) %> |
 <%= link_to 'Show', @team %> |
 <%= link_to 'Back', teams_path %>
