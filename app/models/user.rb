@@ -12,7 +12,6 @@ class User < ApplicationRecord
   validates :is_manager, inclusion: { in: [ true, false ] }
   validates :active, inclusion: { in: [ true, false ] }
 
-  validates_associated :users
   validates :team, presence: true
 
 end
