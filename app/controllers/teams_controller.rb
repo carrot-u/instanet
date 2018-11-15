@@ -1,5 +1,6 @@
 class TeamsController < ApplicationController
   before_action :set_team, only: [:show, :edit, :update, :destroy]
+  before_action :set_team_deactivate, only: [:deactivate]
 
   # GET /users
   # GET /users.json
@@ -53,11 +54,27 @@ class TeamsController < ApplicationController
     end
   end
 
+  def deactivate
+    respond_to do |format|
+      if @team.update(active: false)
+        format.html { redirect_to teams_path, notice: 'Team was successfully deactivated' }
+        format.json { render :show, status: :ok, location: @team }
+      else
+        format.html { render :edit }
+        format.json { render json: @team.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
 
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_team
       @team = Team.find(params[:id])
+    end
+
+    def set_team_deactivate
+      @team = Team.find(params[:team_id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
