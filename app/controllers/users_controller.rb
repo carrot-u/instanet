@@ -7,7 +7,7 @@ class UsersController < ApplicationController
   # GET /users.json
 
   def index
-    @users = User.all.where(active: true)
+    @users = User.all.where(active: true).where(team_id: params[:team_id])
   end
 
   # GET /users/1
