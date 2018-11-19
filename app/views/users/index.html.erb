@@ -1,6 +1,9 @@
 <p id="notice"><%= notice %></p>
 
 <h1>Team: <%= @team.name %></h1>
+<div>
+  <%= link_to 'Edit Team', edit_team_path(@team) %>
+</div>
 
 <p>
   <strong>Name:</strong>
@@ -67,7 +70,7 @@
         <td><%= user.manager_id %></td>
         <td><%= user.started_at %></td>
         <td><%= link_to 'Show', team_user_path(@team, user) %></td>
-        <td><%= link_to 'Edit', edit_team_user_path(@team, user) %></td>
+        <td><%= link_to 'Edit Team Member', edit_team_user_path(@team, user) %></td>
       </tr>
     <% end %>
   </tbody>
