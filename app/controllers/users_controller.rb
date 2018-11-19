@@ -29,6 +29,7 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     @user.active = true
+    @user.team_id = @team.id
 
     respond_to do |format|
       if @user.save
