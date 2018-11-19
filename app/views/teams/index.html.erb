@@ -17,15 +17,30 @@
 
   <tbody>
     <% @teams.each do |team| %>
+    <% unless team.parent_team_id.nil? %>
+    <% @parent_team = Team.find(team.parent_team_id) %>
+    <% end %>
+    <% unless team.manager_id.nil? %>
+    <% @manager = User.find(team.manager_id) %>
+    <% end %>
       <tr>
         <td><%= team.name %></td>
         <td><%= team.description %></td>
         <td><%= team.is_parent %></td>
         <td><%= team.active %></td>
-        <td><%= team.parent_team_id %></td>
-        <td><%= team.manager_id %></td>
+        <% if @parent_team.nil? %>
+        <td></td>
+        <% else %>
+        <td><%= @parent_team.name %></td>
+        <% end %>
+        <% if @manager.nil? %>
+        <td></td>
+        <% else %>
+        <td><%= @manager.last_name + ", " + @manager.first_name %></td>
+        <% end %>
+        <td><%= link_to 'Show', team %></td>
         <td><%= link_to 'Go To Team', team_users_path(team) %></td>
-        <td><%= link_to 'Edit', edit_team_path(team) %></td>
+        <td><%= link_to 'Edit', edit_team_path(team) ></td>
       </tr>
     <% end %>
   </tbody>
