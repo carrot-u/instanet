@@ -1,6 +1,41 @@
 <p id="notice"><%= notice %></p>
 
-<h1><%= @team.name %> Users</h1>
+<h1>Team: <%= @team.name %></h1>
+<div>
+  <%= link_to 'Edit Team', edit_team_path(@team) %>
+</div>
+
+<p>
+  <strong>Name:</strong>
+  <%= @team.name %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @team.description %>
+</p>
+
+<p>
+  <strong>Is parent:</strong>
+  <%= @team.is_parent %>
+</p>
+
+<p>
+  <strong>Active:</strong>
+  <%= @team.active %>
+</p>
+
+<p>
+  <strong>Parent team:</strong>
+  <%= @team.parent_team_id %>
+</p>
+
+<p>
+  <strong>Manager:</strong>
+  <%= @team.manager_id %>
+</p>
+
+<h2>Team Members</h2>
 
 <table>
   <thead>
@@ -35,7 +70,7 @@
         <td><%= user.manager_id %></td>
         <td><%= user.started_at %></td>
         <td><%= link_to 'Show', team_user_path(@team, user) %></td>
-        <td><%= link_to 'Edit', edit_team_user_path(@team, user) %></td>
+        <td><%= link_to 'Edit Team Member', edit_team_user_path(@team, user) %></td>
       </tr>
     <% end %>
   </tbody>
