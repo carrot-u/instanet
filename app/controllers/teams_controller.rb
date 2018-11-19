@@ -1,5 +1,5 @@
 class TeamsController < ApplicationController
-  before_action :set_team, only: [:show, :edit, :update, :destroy]
+  before_action :set_team, only: [:edit, :update, :destroy]
   before_action :set_team_deactivate, only: [:deactivate]
 
   # GET /users
@@ -7,11 +7,6 @@ class TeamsController < ApplicationController
 
   def index
     @teams = Team.all.where(active: true)
-  end
-
-  # GET /users/1
-  # GET /users/1.json
-  def show
   end
 
   # GET /users/new
