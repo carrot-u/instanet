@@ -1,4 +1,7 @@
 <p id="notice"><%= notice %></p>
+<% unless @user.manager_id.nil? %>
+<% @manager = User.find(@user.manager_id) %>
+<% end %>
 
 <p>
   <strong>First Name:</strong>
@@ -21,8 +24,8 @@
 </p>
 
 <p>
-  <strong>team_id:</strong>
-  <%= @user.team_id %>
+  <strong>Team:</strong>
+  <%= @team.name %>
 </p>
 
 <p>
@@ -50,10 +53,12 @@
   <%= @user.active %>
 </p>
 
+<% unless @manager.nil? %>
 <p>
-  <strong>Manager ID:</strong>
-  <%= @user.manager_id %>
+  <strong>Manager:</strong>
+  <%= @manager.last_name + ", " + @manager.first_name %>
 </p>
+<% end %>
 
 <p>
   <strong>Started At:</strong>

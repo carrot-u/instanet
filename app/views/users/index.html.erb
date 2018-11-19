@@ -22,6 +22,9 @@
 
   <tbody>
     <% @users.each do |user| %>
+    <% unless user.manager_id.nil? %>
+    <% @manager = User.find(user.manager_id) %>
+    <% end %>
       <tr>
         <td><%= user.first_name %></td>
         <td><%= user.last_name %></td>
@@ -32,7 +35,11 @@
         <td><%= user.bio %></td>
         <td><%= user.is_manager %></td>
         <td><%= user.active %></td>
-        <td><%= user.manager_id %></td>
+        <% if @manager.nil? %>
+        <td></td>
+        <% else %>
+        <td><%= @manager.last_name + ", " + @manager.first_name %></td>
+        <% end %>
         <td><%= user.started_at %></td>
         <td><%= link_to 'Show', team_user_path(@team, user) %></td>
         <td><%= link_to 'Edit', edit_team_user_path(@team, user) %></td>
