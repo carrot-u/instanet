@@ -11,24 +11,19 @@
   </head>
 
   <body>
-    <div id="wrap">
-      <%= image_tag("instanet", id: "logo") %>
-      <h1>Instanet</h1>
-        <ul>
-          <li class="menu">
-            <%= link_to 'Home', root_path %>
-          </li>
-
-          <li class="menu">
-            <%= link_to 'Teams', teams_path %>
-          </li>
-
-          <li class="menu">
-            <%= link_to 'Users', users_path %>
-          </li>
-        </ul>
+    <div class="container bg-light">
+      <div class="row">
+        <div class="col-8">
+          <%= image_tag("instanet", id: "logo") %>
+          <h1 class="align-top">Instanet</h1>
+        </div>
+        <div class="col-4 d-flex align-items-center">
+            <%= link_to 'Home', root_path, :class => "btn btn-primary mx-1" %>
+            <%= link_to 'Teams', teams_path, :class => "btn btn-primary mx-1" %>
+            <%= link_to 'Users', users_path, :class => "btn btn-primary mx-1" %>
+        </div>
       </div>
-    <br>
+    </div>
     <%= yield %>
   </body>
 </html>
