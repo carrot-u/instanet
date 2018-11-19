@@ -1,5 +1,5 @@
 class TeamsController < ApplicationController
-  before_action :set_team, only: [:show, :edit, :update, :destroy]
+  before_action :set_team, only: [:edit, :update, :destroy]
   before_action :set_team_deactivate, only: [:deactivate]
 
   # GET /users
@@ -7,11 +7,6 @@ class TeamsController < ApplicationController
 
   def index
     @teams = Team.all.where(active: true)
-  end
-
-  # GET /users/1
-  # GET /users/1.json
-  def show
   end
 
   # GET /users/new
@@ -31,7 +26,7 @@ class TeamsController < ApplicationController
 
     respond_to do |format|
       if @team.save
-        format.html { redirect_to @team, notice: 'Team was successfully created.' }
+        format.html { redirect_to team_users_path(@team), notice: 'Team was successfully created.' }
         format.json { render :show, status: :created, location: @team }
       else
         format.html { render :new }
@@ -45,7 +40,7 @@ class TeamsController < ApplicationController
   def update
     respond_to do |format|
       if @team.update(team_params)
-        format.html { redirect_to @team, notice: 'Team was successfully updated.' }
+        format.html { redirect_to team_users_path(@team), notice: 'Team was successfully updated.' }
         format.json { render :show, status: :ok, location: @team }
       else
         format.html { render :edit }
