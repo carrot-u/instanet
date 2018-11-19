@@ -1,6 +1,38 @@
 <p id="notice"><%= notice %></p>
 
-<h1><%= @team.name %> Users</h1>
+<h1>Team: <%= @team.name %></h1>
+
+<p>
+  <strong>Name:</strong>
+  <%= @team.name %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @team.description %>
+</p>
+
+<p>
+  <strong>Is parent:</strong>
+  <%= @team.is_parent %>
+</p>
+
+<p>
+  <strong>Active:</strong>
+  <%= @team.active %>
+</p>
+
+<p>
+  <strong>Parent team:</strong>
+  <%= @team.parent_team_id %>
+</p>
+
+<p>
+  <strong>Manager:</strong>
+  <%= @team.manager_id %>
+</p>
+
+<h2>Team Members</h2>
 
 <table>
   <thead>
