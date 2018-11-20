@@ -13,14 +13,14 @@
   <body class="bg-custom">
     <div class="container-fluid bg-dark pt-3 pb-3">
       <div class="row">
-        <div class="col-10">
+        <div class="col-9">
           <%= image_tag("instanet", id: "logo") %>
           <h1 class="align-top text-light">InstaNet</h1>
         </div>
-        <div class="col-2 d-flex align-items-center">
-            <%= link_to 'Home', root_path, :class => "nav-link text-light mx-1" %>
-            <%= link_to 'Teams', teams_path, :class => "nav-link text-light  mx-1" %>
-            <%= link_to 'Users', users_path, :class => "nav-link text-light  mx-1" %>
+        <div class="col-3 d-flex align-items-center">
+            <%= link_to 'Home', root_path, :class => "nav-link text-light mx-auto" %>
+            <%= link_to 'Teams', teams_path, :class => "nav-link text-light  mx-auto" %>
+            <%= link_to 'Users', users_path, :class => "nav-link text-light mx-auto" %>
         </div>
       </div>
     </div>
