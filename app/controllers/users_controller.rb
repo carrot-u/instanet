@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
   before_action :set_user_deactivate, only: [:deactivate]
-  before_action :set_team, only: [:new]
+  before_action :set_team, only: [:new, :create]
 
   # GET /users
   # GET /users.json
