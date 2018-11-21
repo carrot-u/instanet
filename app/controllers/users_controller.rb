@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
   before_action :set_user_deactivate, only: [:deactivate]
-  before_action :set_team
+  before_action :set_team, only: [:new]
 
   # GET /users
   # GET /users.json
@@ -72,6 +72,7 @@ class UsersController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_user
       @user = User.find(params[:id])
+      @team = Team.find(@user.team_id)
     end
 
     def set_user_deactivate
