@@ -1,7 +1,12 @@
-<h1>Editing User</h1>
+<br><br>
+
+<% @header = "Edit " + @user.first_name + " " + @user.last_name %>
 
 <%= render 'form', user: @user %>
 
-<%= link_to 'Deactivate', team_user_deactivate_path(@team, @user) %>
-<%= link_to 'Show', team_user_path(@team, @user) %> |
-<%= link_to 'Back', team_users_path %>
+<div class="container">
+  <div class="col-12 text-center">
+    <%= link_to 'Deactivate', team_user_deactivate_path(@team, @user), class: "btn btn-danger" %>
+  </div>
+</div>
+<br>
