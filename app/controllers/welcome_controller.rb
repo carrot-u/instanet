@@ -3,7 +3,7 @@ class WelcomeController < ApplicationController
   end
 
   def users
-    @users = User.all.where(active: true)
+    @users = User.all.where(active: true).order(:started_at)
   end
 
   def new_user

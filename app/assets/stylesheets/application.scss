@@ -5,10 +5,6 @@ body {
   font-family: 'Source Sans Pro', sans-serif !important;
 }
 
-.bg-custom {
-    background-color: #E9FFFF !important;
-}
-
 h1 {
   display: inline;
   text-align: center;
@@ -21,11 +17,34 @@ ul {
     margin-right: 100px;
 }
 
+p {
+padding: 10px;
+}
+
+img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+}
+
+.bg-custom {
+    background-color: #E9FFFF !important;
+}
+
 .menu {
     display: inline-block;
     padding: 8px;
     background-color: #dddddd;
 }
+
+.no-deco {
+    text-decoration:none;
+}
+
+// .nav {
+//   line-height: 50px
+// }
 
 #wrap {
   display: inline;
@@ -36,16 +55,4 @@ ul {
   height: 50px;
   width: auto;
   vertical-align: sub;
-}
-
-
-p {
-padding: 10px;
-}
-
-img {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    width: 50%;
 }
