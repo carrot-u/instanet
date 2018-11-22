@@ -1,8 +1,38 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Users</h1>
+<div class="container text-center font-weight-bold text-secondary">
+  <h1 class="display-3">Team Members</h1>
+  <br>
+  <%= link_to 'New Team Member', new_user_path, :class => "btn btn-primary" %>
+</div>
+<br>
 
-<table>
+<div class="container-fluid">
+  <div class="row">
+    <% @users.each do |user| %>
+    <% @team = Team.find(user.team_id) %>
+    <div class="card mx-auto mt-2" style="min-width: 20rem;">
+      <div class="card-body">
+        <%= link_to team_user_path(@team, user) do %>
+          <div class="row no-deco">
+            <div class="col-8">
+              <h5 class="card-title font-weight-bold text-dark"><%= user.first_name + " " + user.last_name %></h5>
+              <h6 class="card-subtitle mb-2 text-muted"><%= @team.name %></h6>
+              <small class="card-text text-dark"><%= user.started_at.strftime("%b %Y") %></small>
+            </div>
+            <div class="col-4">
+              <%= image_tag("avatar", class: "img-fluid rounded-circle", style: "max-height: 100px; width: auto;") %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <% end %>
+  </div>
+</div>
+
+<!-- <table>
   <thead>
     <tr>
       <th>First Name</th>
@@ -54,5 +84,4 @@
 <br>
 
 <%= link_to 'Home', root_path %>
-<%= link_to 'Teams', teams_path %>
-<%= link_to 'New User', new_user_path %>
+<%= link_to 'Teams', teams_path %> -->

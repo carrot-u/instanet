@@ -13,14 +13,20 @@
   <body class="bg-custom">
     <div class="container-fluid bg-dark pt-3 pb-3">
       <div class="row">
-        <div class="col-9">
+        <div class="col-12">
           <%= image_tag("instanetinvert", id: "logo") %>
           <h1 class="align-top text-light">InstaNet</h1>
-        </div>
-        <div class="col-3 d-flex align-items-center">
-            <div><%= link_to 'Home', root_path, :class => "nav-link text-light mx-auto" %></div>
-            <div><%= link_to 'Teams', teams_path, :class => "nav-link text-light  mx-auto" %></div>
-            <div><%= link_to 'Users', users_path, :class => "nav-link text-light mx-auto" %></div>
+          <ul class="nav align-items-center justify-content-end" style="height: 100%">
+            <li class="nav-item">
+              <%= link_to 'Home', root_path, :class => "nav-link text-light mx-auto" %>
+            </li>
+            <li class="nav-item">
+              <%= link_to 'Teams', teams_path, :class => "nav-link text-light mx-auto" %>
+            </li>
+            <li class="nav-item">
+              <%= link_to 'Team Members', users_path, :class => "nav-link text-light mx-auto" %>
+            </li>
+          </ul>
         </div>
       </div>
     </div>
