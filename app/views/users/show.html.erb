@@ -24,7 +24,6 @@
         <p class="card-text text-muted text-center pt-0 mt-0 pb-0 mb-2">
           <small><%= "Since " + @user.started_at.strftime("%B %d, %Y") %></small>
         </p>
-        <p class="card-text text-center pt-0 mt-0 mb-2">"<%=  @user.bio %>"</p>
         <div class="row">
           <div class="col-sm-6">
             <div class="card" style="height: 100%;">
@@ -32,23 +31,31 @@
                 <strong>Info</strong>
               </div>
               <div class="card-body">
-                <h5 class="card-title">Contact:</h5>
-                <ul>
-                  <% unless @manager.nil? %>
-                  <li>
-                    <strong>Reports To:</strong>
-                    <%= @manager.last_name + ", " + @manager.first_name %>
-                  </li>
-                  <% end %>
-                  <li>
-                    <strong>Email:</strong>
-                    <%= @user.email %>
-                  </li>
-                  <li>
-                    <strong>Slack:</strong>
-                    <%= @user.slack %>
-                  </li>
-                </ul>
+                <h5 class="card-title">Bio:<h5>
+                <small class="card-text">"<%=  @user.bio %>"</small>
+                <br><br>
+                <small>
+                  <ul>
+                    <% unless @manager.nil? %>
+                    <li>
+                      <strong>Reports To:</strong>
+                      <%= link_to team_user_path(@team, @manager), :class => "no-deco" do %>
+                      <%= @manager.last_name + ", " + @manager.first_name %>
+                      <% end %>
+                    </li>
+                    <br>
+                    <% end %>
+                    <li>
+                      <strong>Email:</strong>
+                      <%= @user.email %>
+                    </li>
+                    <br>
+                    <li>
+                      <strong>Slack:</strong>
+                      <%= @user.slack %>
+                    </li>
+                  </ul>
+                </small>
               </div>
             </div>
           </div>
@@ -76,7 +83,9 @@
         <div class="row">
           <div class="col mt-3">
             <%= link_to 'Edit', edit_team_user_path(@team, @user), :class => "btn btn-outline-secondary" %>
-            <%= link_to 'Back', team_users_path, :class => "btn btn-outline-primary" %>
+            <%= link_to team_users_path, :class => "btn btn-outline-primary" do %>
+            Back To <%= @team.name %>
+            <% end %>
           </div>
       </div>
       </div>
