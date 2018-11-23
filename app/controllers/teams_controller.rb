@@ -7,8 +7,10 @@ class TeamsController < ApplicationController
   # GET /users.json
 
   def index
-    @team = Team.find(1)
-    redirect_to team_path(@team) and return
+    unless Team.all.empty?
+      @team = Team.find(1)
+      redirect_to team_path(@team) and return
+    end
   end
 
   def show

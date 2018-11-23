@@ -13,7 +13,9 @@
           <% end %>
         </div>
         <div class="col-6 text-center">
+          <%= link_to team_users_path(@team), :class => "text-dark no-deco" do %>
           <h3><%= @team.name %></h3>
+          <% end %>
         </div>
         <div class="col-3">
           <%= link_to 'New Team', new_team_path, :class => "float-right btn btn-outline-primary" %>
