@@ -44,7 +44,11 @@ a:hover, a:visited, a:link, a:active {
 }
 
 .no-deco {
-    text-decoration:none;
+    text-decoration: none;
+}
+
+.border-clear {
+  border: none !important;
 }
 
 // .nav {

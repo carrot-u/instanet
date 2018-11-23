@@ -1,0 +1,97 @@
+<p id="notice"><%= notice %></p>
+<br>
+<div class="container-fluid">
+  <div class="card border-dark mb-3">
+    <div class="card-header">
+      <div class="row">
+        <div class="col-3">
+          <% unless @team.parent_team_id.nil? %>
+          <% @parent_team = Team.find(@team.parent_team_id) %>
+          <%= link_to team_path(@parent_team), :class => "btn btn-outline-secondary" do %>
+          Back to <%= @parent_team.name %>
+          <% end %>
+          <% end %>
+        </div>
+        <div class="col-6 text-center">
+          <h3><%= @team.name %></h3>
+        </div>
+        <div class="col-3">
+          <%= link_to 'New Team', new_team_path, :class => "float-right btn btn-outline-primary" %>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-12 text-center">
+          <strong>Managers: </strong>
+        </div>
+      </div>
+      <div class="row">
+        <% @managers.each do |user| %>
+        <div class="card mx-auto mt-2 border-clear" style="max-width 10rem;">
+          <div class="card-body no-deco px-0 py-0">
+            <%= link_to team_user_path(@team, user) do %>
+            <div class="row">
+              <div class="col-12">
+                <%= image_tag("avatar", class: "img-fluid rounded-circle", style: "max-height: 50px; width: auto;") %>
+              </div>
+            </div>
+            <div class="row no-deco">
+              <div class="col-12 text-center text-dark">
+                <small><%= user.first_name + " " + user.last_name %></small>
+              </div>
+            </div>
+            <% end %>
+          </div>
+        </div>
+        <% end %>
+      </div>
+    </div>
+    <div class="card mx-auto mt-3 mb-3" style="width: 95%">
+      <div class="card-header text-center">
+        <h5>Subteams</h5>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <% @subteams.each do |team| %>
+          <% @subteam_managers = User.all.where(active: true).where(team_id: team.id).where(is_manager: true) %>
+            <div class="card mx-auto mt-3 mb-3" style="max-width: 30rem; min-width: 15rem;">
+              <%= link_to team_path(team) do %>
+              <div class="card-header text-center text-dark">
+                <h3><%= team.name %></h3>
+              </div>
+              <% end %>
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-12 text-center">
+                    <strong>Managers: </strong>
+                  </div>
+                </div>
+                <div class="row">
+                  <% @subteam_managers.each do |user| %>
+                  <div class="card mx-auto mt-2 border-clear" style="max-width 10rem;">
+                    <div class="card-body no-deco px-0 py-0">
+                      <%= link_to team_user_path(team, user) do %>
+                      <div class="row">
+                        <div class="col-12">
+                          <%= image_tag("avatar", class: "img-fluid rounded-circle", style: "max-height: 50px; width: auto;") %>
+                        </div>
+                      </div>
+                      <div class="row no-deco">
+                        <div class="col-12 text-center text-dark">
+                          <small><%= user.first_name + " " + user.last_name %></small>
+                        </div>
+                      </div>
+                      <% end %>
+                    </div>
+                  </div>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
