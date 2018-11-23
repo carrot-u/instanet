@@ -12,7 +12,11 @@ class User < ApplicationRecord
   validates :is_manager, inclusion: { in: [ true, false ] }
   validates :active, inclusion: { in: [ true, false ] }
   validates_format_of :email,:with => /\A[^@\s]+@([^@\s]+\.)+[^@\s]+\z/
-
+  validates :started_at, presence: true
   validates :team, presence: true
+
+  def full_name
+    "#{first_name} #{last_name}"
+  end
 
 end
