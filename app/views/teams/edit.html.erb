@@ -1,7 +1,12 @@
-<h1>Editing Team</h1>
+<br><br>
+
+<% @header = "Editing " + @team.name %>
 
 <%= render 'form', team: @team %>
 
-<%= link_to 'Deactivate', team_deactivate_path(@team) %> |
-<%= link_to 'Show', @team %> |
-<%= link_to 'Back', teams_path %>
+<div class="container">
+  <div class="col-12 text-center">
+    <%= link_to 'Deactivate', team_deactivate_path(@team, @user), class: "btn btn-danger" %>
+  </div>
+</div>
+<br>

@@ -1,12 +1,20 @@
 class TeamsController < ApplicationController
-  before_action :set_team, only: [:edit, :update, :destroy]
+  before_action :set_team, only: [:show, :edit, :update, :destroy]
   before_action :set_team_deactivate, only: [:deactivate]
+  before_action :set_subteams, only: [:show]
 
   # GET /users
   # GET /users.json
 
   def index
-    @teams = Team.all.where(active: true)
+    @team = Team.find(1)
+    redirect_to team_path(@team) and return
+  end
+
+  def show
+    while @subteams.empty?
+      redirect_to team_users_path(@team) and return
+    end
   end
 
   # GET /users/new
@@ -66,10 +74,15 @@ class TeamsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_team
       @team = Team.find(params[:id])
+      @managers = User.all.where(active: true).where(team_id: @team.id).where(is_manager: true)
     end
 
     def set_team_deactivate
       @team = Team.find(params[:team_id])
+    end
+
+    def set_subteams
+      @subteams = Team.all.where(active: true).where(parent_team_id: params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

@@ -4,97 +4,101 @@
 <div class="container-fluid">
   <div class="col align-self-center">
     <div class="card border-dark mb-3 mx-auto">
-
+      <div class="card-header text-center">
+        <div class="row justify-content-end">
+          <div class="col-4">
+            <% if @team.parent_team_id.nil? %>
+            <%= link_to teams_path, :class => "float-left btn btn-outline-primary" do %>
+            Back to Teams
+            <% end %>
+            <% else %>
+            <% @parent_team = Team.find(@team.parent_team_id) %>
+            <%= link_to team_path(@parent_team), :class => "float-left btn btn-outline-secondary" do %>
+            Back to <%= @parent_team.name %>
+            <% end %>
+            <% end %>
+          </div>
+          <div class="col-4">
+            <h2><%= @team.name %></h2>
+          </div>
+          <div class="col-4">
+            <%= link_to edit_team_path(@team), :class => "float-right btn btn-outline-secondary" do %>
+            Edit <%= @team.name %>
+            <% end %>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 text-center">
+            <strong class="font-weight-bold font-italic">
+              <%= @team.description %>
+            </strong>
+        </div>
+        </div>
+      </div>
+      <%= link_to new_team_user_path, :class => "mt-3 mx-auto btn btn-primary" do %>
+      New <%= @team.name %> Member
+      <% end %>
+      <div class="card-body text-center">
+        <div class="card border-dark mb-3 mx-auto">
+          <div class="card-header text-center">
+            <h2>Managers</h2>
+          </div>
+          <div class="card-body">
+            <div class="container-fluid">
+              <div class="row">
+                <% @managers.each do |user| %>
+                <div class="card mx-auto mt-2" style="min-width: 20rem;">
+                  <div class="card-body">
+                    <%= link_to team_user_path(@team, user) do %>
+                    <div class="row no-deco">
+                      <div class="col-8">
+                        <h5 class="card-title font-weight-bold text-dark"><%= user.first_name + " " + user.last_name %></h5>
+                        <h6 class="card-subtitle mb-2 text-muted"><%= user.title %></h6>
+                        <small class="card-text text-dark"><%= user.started_at.strftime("%b %Y") %></small>
+                      </div>
+                      <div class="col-4">
+                        <%= image_tag("avatar", class: "img-fluid rounded-circle", style: "max-height: 100px; width: auto;") %>
+                      </div>
+                    </div>
+                    <% end %>
+                  </div>
+                </div>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card border-dark mb-3 mx-auto">
+          <div class="card-header text-center">
+            <h2>Team Members</h2>
+          </div>
+          <div class="card-body">
+            <div class="container-fluid">
+              <div class="row">
+                <% @users.each do |user| %>
+                <% @user_manager = User.find(user.manager_id) %>
+                <div class="card mx-auto mt-2" style="min-width: 20rem;">
+                  <div class="card-body">
+                    <%= link_to team_user_path(@team, user) do %>
+                    <div class="row no-deco">
+                      <div class="col-8">
+                        <h5 class="card-title font-weight-bold text-dark"><%= user.first_name + " " + user.last_name %></h5>
+                        <h6 class="card-subtitle mb-2 text-muted"><%= user.title %></h6>
+                        <small class="card-text text-dark">Reports To: <%= @user_manager.last_name + ", " + @user_manager.first_name %></small>
+                      </div>
+                      <div class="col-4">
+                        <%= image_tag("avatar", class: "img-fluid rounded-circle", style: "max-height: 100px; width: auto;") %>
+                      </div>
+                    </div>
+                    <% end %>
+                  </div>
+                </div>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
-
-
-<h1>Team: <%= @team.name %></h1>
-<div>
-  <%= link_to 'Edit Team', edit_team_path(@team) %>
-</div>
-
-<p>
-  <strong>Name:</strong>
-  <%= @team.name %>
-</p>
-
-<p>
-  <strong>Description:</strong>
-  <%= @team.description %>
-</p>
-
-<p>
-  <strong>Is parent:</strong>
-  <%= @team.is_parent %>
-</p>
-
-<p>
-  <strong>Active:</strong>
-  <%= @team.active %>
-</p>
-
-<p>
-  <strong>Parent team:</strong>
-  <%= @team.parent_team_id %>
-</p>
-
-<p>
-  <strong>Manager:</strong>
-  <%= @team.manager_id %>
-</p>
-
-<h2>Team Members</h2>
-
-<table>
-  <thead>
-    <tr>
-      <th>First Name</th>
-      <th>Last Name</th>
-      <th>Title</th>
-      <th>Tier</th>
-      <th>Email</th>
-      <th>Slack</th>
-      <th>Bio</th>
-      <th>Is Manager?</th>
-      <th>Active?</th>
-      <th>Manager_id</th>
-      <th>Started At</th>
-      <th colspan="14"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @users.each do |user| %>
-    <% unless user.manager_id.nil? %>
-    <% @manager = User.find(user.manager_id) %>
-    <% end %>
-      <tr>
-        <td><%= user.first_name %></td>
-        <td><%= user.last_name %></td>
-        <td><%= user.title %></td>
-        <td><%= user.tier %></td>
-        <td><%= user.email %></td>
-        <td><%= user.slack %></td>
-        <td><%= user.bio %></td>
-        <td><%= user.is_manager %></td>
-        <td><%= user.active %></td>
-        <% if @manager.nil? %>
-        <td></td>
-        <% else %>
-        <td><%= @manager.last_name + ", " + @manager.first_name %></td>
-        <% end %>
-        <td><%= user.started_at %></td>
-        <td><%= link_to 'Show', team_user_path(@team, user) %></td>
-        <td><%= link_to 'Edit Team Member', edit_team_user_path(@team, user) %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'Home', root_path %>
-<%= link_to 'Teams', teams_path %>
-<%= link_to 'New User', new_team_user_path %>

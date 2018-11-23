@@ -1,42 +1,55 @@
-<%= form_with(model: team, local: true) do |form| %>
-  <% if team.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(team.errors.count, "error") %> prohibited this team from being saved:</h2>
-
-      <ul>
-      <% team.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+<div class="container-fluid">
+  <div class="card border-dark mb-3 mx-auto">
+    <div class="card-header">
+      <div><%= @header %></div>
     </div>
-  <% end %>
+    <%= form_with(model: team, local: true) do |form| %>
+      <% if team.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(team.errors.count, "error") %> prohibited this team from being saved:</h2>
 
-  <div class="field">
-    <%= form.label :name %>
-    <%= form.text_field :name %>
-  </div>
+          <ul>
+          <% team.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+          </ul>
+        </div>
+      <% end %>
 
-  <div class="field">
-    <%= form.label :description %>
-    <%= form.text_area :description %>
+      <div class="row">
+        <div class="col-6">
+          <div class="form-group col-10">
+            <%= form.label :name %>
+            <%= form.text_field :name, class: "form-control" %>
+          </div>
+          <div class="form-group col-10">
+            <%= form.label :parent_team_id %>
+            <%= form.collection_select :parent_team_id, Team.where(active: true).where(is_parent: true), :id, :name, {prompt: "Select Parent Team"}, {class: "form-control"} %>
+          </div>
+          <div class="form-group col-10">
+            <%= form.label :manager_id %>
+            <%= form.collection_select :manager_id, User.where(active: true).where(is_manager: true), :id, :full_name, {prompt: "Select Manager"}, {class: "form-control"} %>
+          </div>
+          <div class="form-check col-10">
+            <%= form.label :is_parent, 'Has Subteams?' %>
+            <%= form.check_box :is_parent, class: "form-check-label" %>
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="form-group col-11">
+            <%= form.label :description %>
+            <%= form.text_area :description, class: "form-control", rows: "9" %>
+          </div>
+          <div class="form-group col-11">
+            <div class="row justify-content-end">
+              <div class="col-4 form-group">
+                <%= form.submit "Submit", class: "btn btn-outline-primary" %>
+                <%= link_to 'Back', users_path, class: "btn btn-outline-secondary" %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
   </div>
-
-  <div class="field">
-    <%= form.label :is_parent %>
-    <%= form.check_box :is_parent %>
-  </div>
-
-  <div class="field">
-    <%= form.label :parent_team_id %>
-    <%= form.number_field :parent_team_id %>
-  </div>
-
-  <div class="field">
-    <%= form.label :manager_id %>
-    <%= form.number_field :manager_id %>
-  </div>
-
-  <div class="actions">
-    <%= form.submit %>
-  </div>
-<% end %>
+</div>
