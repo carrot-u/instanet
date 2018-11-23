@@ -9,6 +9,4 @@ class Team < ApplicationRecord
   validates :active, inclusion: { in: [ true, false ] }
   validates :is_parent, inclusion: { in: [ true, false ] }
 
-  validates_associated :manager
-
 end

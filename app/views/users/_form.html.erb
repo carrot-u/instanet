@@ -1,77 +1,88 @@
-<div class="container-fluid">
-  <div class="card border-dark mb-3 mx-auto">
-    <div class="card-header">
-      <div><%= @header %></div>
-    </div>
-    <%= form_with(model: [@team, @user], local: true) do |form| %>
-      <% if user.errors.any? %>
-        <div id="error_explanation">
-          <h2><%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:</h2>
-
-          <ul>
-          <% user.errors.full_messages.each do |message| %>
-            <li><%= message %></li>
+<%= form_with(model: [@team, @user], local: true) do |form| %>
+  <div class="container-fluid">
+    <div class="card border-dark mb-3 mx-auto">
+      <div class="card-header">
+        <div><%= @header %></div>
+      </div>
+      <div class="card-body">
+        <% if user.errors.any? %>
+        <div class="row">
+          <div class="card text-white bg-danger mx-auto mb-3">
+            <div class="card-header" id="error_explanation">
+              <h4><%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:</h4>
+            </div>
+            <div class="card-body">
+              <ul>
+              <% user.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+              </ul>
+            </div>
+          </div>
           <% end %>
-          </ul>
         </div>
-      <% end %>
-
-      <div class="row">
-        <div class="col-6">
-          <div class="form-group col-10">
-            <%= form.label :first_name %>
-            <%= form.text_field :first_name, class: "form-control" %>
-          </div>
-          <div class="form-group col-10">
-            <%= form.label :last_name %>
-            <%= form.text_field :last_name, class: "form-control" %>
-          </div>
-          <div class="form-group col-10">
-            <%= form.label :title %>
-            <%= form.text_field :title, class: "form-control" %>
-          </div>
-          <div class="form-group col-8">
-            <%= form.label :email %>
-            <%= form.text_field :email, class: "form-control", placeholder: "name@example.com" %>
-          </div>
-          <div class="form-group col-8">
-            <%= form.label :slack %>
-            <%= form.text_field :slack, class: "form-control", placeholder: "@first.last" %>
-          </div>
-        </div>
-        <div class="col-6">
-          <div class="form-group col-10">
-            <%= form.label :team_id %>
-            <%= form.collection_select :team_id, Team.where(active: true), :id, :name, {:selected => params[:team_id]}, {class: "form-control"} %>
-          </div>
-          <div class="form-group col-11">
-            <%= form.label :bio %>
-            <%= form.text_area :bio, class: "form-control", rows: "9" %>
-          </div>
-          <div class="form-group col-11">
-            <div class="row">
-              <div class="form-group col-6">
-                <%= form.label :manager_id %>
-                <%= form.collection_select :manager_id, User.where(active: true).where(is_manager: true), :id, :full_name, {prompt: "Select Manager"}, {class: "form-control"} %>
-              </div>
-              <div class="form-group col-6">
-                <%= form.label :started_at, 'Starting Date' %>
-                <%= form.date_field :started_at, class: "form-control" %>
+        <div class="row">
+          <div class="col-6">
+            <div class="form-group col-10">
+              <%= form.label :first_name %>
+              <%= form.text_field :first_name, class: "form-control" %>
+            </div>
+            <div class="form-group col-10">
+              <%= form.label :last_name %>
+              <%= form.text_field :last_name, class: "form-control" %>
+            </div>
+            <div class="form-group col-10">
+              <%= form.label :title %>
+              <%= form.text_field :title, class: "form-control" %>
+            </div>
+            <div class="form-group col-8">
+              <%= form.label :email %>
+              <%= form.text_field :email, class: "form-control", placeholder: "name@example.com" %>
+            </div>
+            <div class="form-group col-8">
+              <%= form.label :slack %>
+              <div class="input-group mb-2">
+                <div class="input-group-prepend">
+                  <div class="input-group-text">@</div>
+                </div>
+                <%= form.text_field :slack, class: "form-control", placeholder: "example.username" %>
               </div>
             </div>
-            <div class="row">
-              <div class="form-check col-6">
-                <%= form.label :is_manager, 'Team Manager?' %>
-                <%= form.check_box :is_manager, class: "form-check-label" %>
+          </div>
+          <div class="col-6">
+            <div class="form-group col-10">
+              <%= form.label :team_id %>
+              <%= form.collection_select :team_id, Team.where(active: true), :id, :name, {:selected => params[:team_id]}, {class: "form-control"} %>
+            </div>
+            <div class="form-group col-11">
+              <%= form.label :bio %>
+              <%= form.text_area :bio, class: "form-control", rows: "9" %>
+            </div>
+            <div class="form-group col-11">
+              <div class="row">
+                <div class="form-group col-6">
+                  <%= form.label :manager_id %>
+                  <%= form.collection_select :manager_id, User.where(active: true).where(is_manager: true), :id, :full_name, {prompt: "Select Manager"}, {class: "form-control"} %>
+                </div>
+                <div class="form-group col-6">
+                  <%= form.label :started_at, 'Starting Date' %>
+                  <%= form.date_field :started_at, class: "form-control" %>
+                </div>
               </div>
-              <div class="form-group col-6 justify-content-end">
-                <%= form.submit "Submit", class: "btn btn-outline-primary" %>
-                <%= link_to 'Back', team_users_path, class: "btn btn-outline-secondary" %>
+              <div class="row">
+                <div class="form-check col-6">
+                  <%= form.label :is_manager, 'Team Manager?' %>
+                  <%= form.check_box :is_manager, class: "form-check-label" %>
+                </div>
+                <div class="form-group col-6 justify-content-end">
+                  <%= form.submit "Submit", class: "btn btn-outline-primary" %>
+                  <%= link_to 'Back', team_users_path, class: "btn btn-outline-secondary" %>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    <% end %>
+    </div>
   </div>
-</div>
+<% end %>
