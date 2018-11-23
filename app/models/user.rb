@@ -3,15 +3,13 @@ class User < ApplicationRecord
   belongs_to :team
   belongs_to :manager, class_name: 'User', optional: true
 
-  validates :first_name, presence: true
-  validates :first_name, length: { minimum: 2 }
-  validates :last_name, presence: true
-  validates :last_name, length: { minimum: 2 }
-  validates :title, presence: true
-  validates :title, length: { minimum: 2 }
+  validates :first_name, presence: true, length: { minimum: 2 }
+  validates :last_name, presence: true, length: { minimum: 2 }
+  validates :title, presence: true, length: { minimum: 2 }
   validates :is_manager, inclusion: { in: [ true, false ] }
   validates :active, inclusion: { in: [ true, false ] }
-  validates_format_of :email,:with => /\A[^@\s]+@([^@\s]+\.)+[^@\s]+\z/
+  validates :email, presence: true, uniqueness: { case_sensitive: false }, format: { with: /\A[^@\s]+@([^@\s]+\.)+[^@\s]+\z/, message: "Must be a valid e-mail format" }
+  validates :slack, presence: true, uniqueness: { case_sensitive: false }, format: { with: /\A[a-z0-9][a-z0-9._-]*\z/, message: "Must be a valid slack username format" }
   validates :started_at, presence: true
   validates :team, presence: true
 

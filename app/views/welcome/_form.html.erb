@@ -3,19 +3,24 @@
     <div class="card-header">
       <div><%= @header %></div>
     </div>
+    <div class="card-body">
     <%= form_with(model: [@team, @user], local: true) do |form| %>
       <% if user.errors.any? %>
-        <div id="error_explanation">
-          <h2><%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:</h2>
-
-          <ul>
-          <% user.errors.full_messages.each do |message| %>
-            <li><%= message %></li>
-          <% end %>
-          </ul>
+      <div class="row">
+        <div class="card text-white bg-danger mx-auto mb-3">
+          <div class="card-header" id="error_explanation">
+            <h4><%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:</h4>
+          </div>
+          <div class="card-body">
+            <ul>
+            <% user.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+            </ul>
+          </div>
         </div>
-      <% end %>
-
+        <% end %>
+      </div>
       <div class="row">
         <div class="col-6">
           <div class="form-group col-10">
@@ -76,6 +81,7 @@
           </div>
         </div>
       </div>
-    <% end %>
+      <% end %>
+    </div>
   </div>
 </div>
