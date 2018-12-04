@@ -8,6 +8,7 @@ Rails.application.routes.draw do
     get '/deactivate', to: 'teams#deactivate', as: 'deactivate'
     resources :users, :except => [:delete] do
       get '/deactivate', to: 'users#deactivate', as: 'deactivate'
+      resources :user_badges, :except => [:delete] 
     end
   end
 end

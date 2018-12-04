@@ -2,6 +2,7 @@ class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
   before_action :set_user_deactivate, only: [:deactivate]
   before_action :set_team, only: [:new, :create, :index]
+  before_action :set_user_badges, only: [:show]
 
   # GET /users
   # GET /users.json
@@ -82,6 +83,10 @@ class UsersController < ApplicationController
 
     def set_team
       @team = Team.find(params[:team_id])
+    end
+
+    def set_user_badges
+      @user_badges = UserBadge.where(user_id: @user.id)
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
