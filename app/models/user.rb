@@ -13,6 +13,9 @@ class User < ApplicationRecord
   validates :started_at, presence: true
   validates :team, presence: true
 
+  validates_associated :users, :manager, allow_nil: true
+  validates_associated :team
+
   def full_name
     "#{first_name} #{last_name}"
   end
