@@ -1,0 +1,67 @@
+<div class="container-fluid">
+  <div class="card border-dark mb-3 mx-auto">
+    <div class="card-header">
+      <div><%= @header %></div>
+    </div>
+    <%= form_with(model: [@team, @user, @user_badge], local: true) do |form| %>
+      <% if user_badge.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(user_badge.errors.count, "error") %> prohibited this user_badge from being saved:</h2>
+
+          <ul>
+          <% user_badge.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+          </ul>
+        </div>
+      <% end %>
+      <br>
+      <div class="row">
+        <div class="mx-auto">
+          <%= image_tag("img_solveforthecustomer", class: "img-fluid rounded-circle", style: "max-height: 100px; width: auto;") %>
+          <div class="form-check float-right">
+            <%= form.radio_button :badge, value: 1, class: "form-check-label" %>
+          </div>
+        </div>
+        <div class="mx-auto">
+          <%= image_tag("img-this-is-your-baby", class: "img-fluid rounded-circle", style: "max-height: 100px; width: auto;") %>
+          <div class="form-check float-right">
+            <%= form.radio_button :badge, value: 2, class: "float-right form-check-label" %>
+          </div>
+        </div>
+        <div class="mx-auto">
+          <%= image_tag("img_everyminutecounts", class: "img-fluid rounded-circle", style: "max-height: 100px; width: auto;") %>
+          <div class="form-check float-right">
+            <%= form.radio_button :badge, value: 3, class: "form-check-label" %>
+          </div>
+        </div>
+        <div class="mx-auto">
+          <%= image_tag("img-of-course-but-maybe", class: "img-fluid rounded-circle", style: "max-height: 100px; width: auto;") %>
+          <div class="form-check float-right">
+            <%= form.radio_button :badge, value: 4, class: "form-check-label" %>
+          </div>
+        </div>
+        <div class="mx-auto">
+          <%= image_tag("img_gofartogether", class: "img-fluid rounded-circle", style: "max-height: 100px; width: auto;") %>
+          <div class="form-check float-right">
+            <%= form.radio_button :badge, value: 5, class: "form-check-label" %>
+          </div>
+        </div>
+      </div>
+      <br>
+      <div class="row">
+        <div class="col-8 offset-2">
+          <div class="form-group">
+            <%= form.text_area :description, class: "form-control", rows: "9" %>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group mx-auto">
+          <%= form.submit "Create Badge!", class: "btn btn-outline-primary" %>
+          <%= link_to 'Back', team_user_path(@team, @user), class: "btn btn-outline-secondary" %>
+        </div>
+      <div>
+    <% end %>
+  </div>
+</div>

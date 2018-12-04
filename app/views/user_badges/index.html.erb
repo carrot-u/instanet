@@ -1,0 +1,36 @@
+<p id="notice"><%= notice %></p>
+
+<h1>User Badges</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>User</th>
+      <th>Badge</th>
+      <th>Name</th>
+      <th>Src</th>
+      <th>Description</th>
+      <th>Active</th>
+      <th>Issued by</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @user_badges.each do |user_badge| %>
+      <tr>
+        <td><%= user_badge.user %></td>
+        <td><%= user_badge.badge %></td>
+        <td><%= user_badge.name %></td>
+        <td><%= user_badge.src %></td>
+        <td><%= user_badge.description %></td>
+        <td><%= user_badge.active %></td>
+        <td><%= user_badge.issued_by_id %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New User Badge', new_team_user_user_badge_path %>

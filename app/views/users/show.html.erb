@@ -64,8 +64,52 @@
               <strong>Badges</strong>
             </div>
             <div class="card-body">
-              <h5 class="card-title">Badges would go here</h5>
-              <p class="card-text">Badge icons with badge count, view all link redirecting to badge list</p>
+              <div class="row">
+                <div class="mx-auto">
+                  <% if @user_badges.where(badge: 1).empty? %>
+                  <%= image_tag("img_solveforthecustomer_grey", class: "img-fluid rounded-circle", style: "max-height: 100px; width: auto;") %>
+                  <span class="float-right badge badge-danger">0</span>
+                  <% else %>
+                  <%= image_tag("img_solveforthecustomer", class: "img-fluid rounded-circle", style: "max-height: 100px; width: auto;") %>
+                  <% end %>
+                </div>
+                <div class="mx-auto">
+                  <% if @user_badges.where(badge: 2).empty? %>
+                  <%= image_tag("img-this-is-your-baby_grey", class: "img-fluid rounded-circle", style: "max-height: 100px; width: auto;") %>
+                  <span class="float-right badge badge-danger">0</span>
+                  <% else %>
+                  <%= image_tag("img-this-is-your-baby", class: "img-fluid rounded-circle", style: "max-height: 100px; width: auto;") %>
+                  <% end %>
+                </div>
+                <div class="mx-auto">
+                  <% if @user_badges.where(badge: 3).empty? %>
+                  <%= image_tag("img_everyminutecounts_grey", class: "img-fluid rounded-circle", style: "max-height: 100px; width: auto;") %>
+                  <span class="float-right badge badge-danger">0</span>
+                  <% else %>
+                  <%= image_tag("img_everyminutecounts", class: "img-fluid rounded-circle", style: "max-height: 100px; width: auto;") %>
+                  <% end %>
+                </div>
+                <div class="mx-auto">
+                  <% if @user_badges.where(badge: 4).empty? %>
+                  <%= image_tag("img-of-course-but-maybe_grey", class: "img-fluid rounded-circle", style: "max-height: 100px; width: auto;") %>
+                  <span class="float-right badge badge-danger">0</span>
+                  <% else %>
+                  <%= image_tag("img-of-course-but-maybe", class: "img-fluid rounded-circle", style: "max-height: 100px; width: auto;") %>
+                  <% end %>
+                </div>
+                <div class="mx-auto">
+                  <% if @user_badges.where(badge: 4).empty? %>
+                  <%= image_tag("img_gofartogether_grey", class: "img-fluid rounded-circle", style: "max-height: 100px; width: auto;") %>
+                  <span class="float-right badge badge-danger">0</span>
+                  <% else %>
+                  <%= image_tag("img_gofartogether", class: "img-fluid rounded-circle", style: "max-height: 100px; width: auto;") %>
+                  <% end %>
+                </div>
+              </div>
+              <br>
+              <div class="row">
+                <%= link_to 'Give Badge!', new_team_user_user_badge_path(@team, @user), :class => "mx-auto btn btn-primary" %>
+              </div>
             </div>
           </div>
           <div class="card mt-2">
