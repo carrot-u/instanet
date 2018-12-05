@@ -68,47 +68,55 @@
                 <div class="mx-auto">
                   <% if @user_badges.where(badge: 1).empty? %>
                   <%= image_tag("img_solveforthecustomer_grey", class: "img-fluid rounded-circle", style: "max-height: 100px; width: auto;") %>
-                  <span class="float-right badge badge-danger">0</span>
+                  <span class="float-right badge badge-pill badge-secondary">0</span>
                   <% else %>
                   <%= image_tag("img_solveforthecustomer", class: "img-fluid rounded-circle", style: "max-height: 100px; width: auto;") %>
+                  <span class="float-right badge badge-pill badge-danger"><%= @user_badges.where(badge: 1).where(active: true).count %></span>
                   <% end %>
                 </div>
                 <div class="mx-auto">
                   <% if @user_badges.where(badge: 2).empty? %>
                   <%= image_tag("img-this-is-your-baby_grey", class: "img-fluid rounded-circle", style: "max-height: 100px; width: auto;") %>
-                  <span class="float-right badge badge-danger">0</span>
+                  <span class="float-right badge badge-pill badge-secondary">0</span>
                   <% else %>
                   <%= image_tag("img-this-is-your-baby", class: "img-fluid rounded-circle", style: "max-height: 100px; width: auto;") %>
+                  <span class="float-right badge badge-pill badge-danger"><%= @user_badges.where(badge: 2).where(active: true).count %></span>
                   <% end %>
                 </div>
                 <div class="mx-auto">
                   <% if @user_badges.where(badge: 3).empty? %>
                   <%= image_tag("img_everyminutecounts_grey", class: "img-fluid rounded-circle", style: "max-height: 100px; width: auto;") %>
-                  <span class="float-right badge badge-danger">0</span>
+                  <span class="float-right badge badge-pill badge-secondary">0</span>
                   <% else %>
                   <%= image_tag("img_everyminutecounts", class: "img-fluid rounded-circle", style: "max-height: 100px; width: auto;") %>
+                  <span class="float-right badge badge-pill badge-danger"><%= @user_badges.where(badge: 3).where(active: true).count %></span>
                   <% end %>
                 </div>
                 <div class="mx-auto">
                   <% if @user_badges.where(badge: 4).empty? %>
                   <%= image_tag("img-of-course-but-maybe_grey", class: "img-fluid rounded-circle", style: "max-height: 100px; width: auto;") %>
-                  <span class="float-right badge badge-danger">0</span>
+                  <span class="float-right badge badge-pill badge-secondary">0</span>
                   <% else %>
                   <%= image_tag("img-of-course-but-maybe", class: "img-fluid rounded-circle", style: "max-height: 100px; width: auto;") %>
+                  <span class="float-right badge badge-pill badge-danger"><%= @user_badges.where(badge: 4).where(active: true).count %></span>
                   <% end %>
                 </div>
                 <div class="mx-auto">
-                  <% if @user_badges.where(badge: 4).empty? %>
+                  <% if @user_badges.where(badge: 5).empty? %>
                   <%= image_tag("img_gofartogether_grey", class: "img-fluid rounded-circle", style: "max-height: 100px; width: auto;") %>
-                  <span class="float-right badge badge-danger">0</span>
+                  <span class="float-right badge badge-pill badge-secondary">0</span>
                   <% else %>
                   <%= image_tag("img_gofartogether", class: "img-fluid rounded-circle", style: "max-height: 100px; width: auto;") %>
+                  <span class="float-right badge badge-pill badge-danger"><%= @user_badges.where(badge: 5).where(active: true).count %></span>
                   <% end %>
                 </div>
               </div>
               <br>
               <div class="row">
-                <%= link_to 'Give Badge!', new_team_user_user_badge_path(@team, @user), :class => "mx-auto btn btn-primary" %>
+                <div class="mx-auto">
+                  <%= link_to 'See All Badges', team_user_user_badges_path(@team, @user), :class => "btn btn-outline-primary" %>
+                  <%= link_to 'Give A Badge!', new_team_user_user_badge_path(@team, @user), :class => "btn btn-primary" %>
+                </div>
               </div>
             </div>
           </div>

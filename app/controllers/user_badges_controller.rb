@@ -1,25 +1,16 @@
 class UserBadgesController < ApplicationController
-  before_action :set_user_badge, only: [:show, :edit, :update, :deactivate]
-  before_action :set_team_user, only: [:new, :create, :index]
+  before_action :set_user_badge, only: [:deactivate]
+  before_action :set_team_user, only: [:new, :create, :index, :deactivate]
 
   # GET /user_badges
   # GET /user_badges.json
   def index
-    @user_badges = UserBadge.where(user_id: params[:user_id])
-  end
-
-  # GET /user_badges/1
-  # GET /user_badges/1.json
-  def show
+    @user_badges = UserBadge.where(active: true).where(user_id: params[:user_id])
   end
 
   # GET /user_badges/new
   def new
     @user_badge = UserBadge.new
-  end
-
-  # GET /user_badges/1/edit
-  def edit
   end
 
   # POST /user_badges
@@ -35,20 +26,6 @@ class UserBadgesController < ApplicationController
         format.json { render :show, status: :created, location: @user_badge }
       else
         format.html { render :new }
-        format.json { render json: @user_badge.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  # PATCH/PUT /user_badges/1
-  # PATCH/PUT /user_badges/1.json
-  def update
-    respond_to do |format|
-      if @user_badge.update(user_badge_params)
-        format.html { redirect_to team_user_path(@team, @user), notice: 'User badge was successfully updated.' }
-        format.json { render :show, status: :ok, location: @user_badge }
-      else
-        format.html { render :edit }
         format.json { render json: @user_badge.errors, status: :unprocessable_entity }
       end
     end
@@ -71,7 +48,7 @@ class UserBadgesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user_badge
-      @user_badge = UserBadge.find(params[:id])
+      @user_badge = UserBadge.find(params[:user_badge_id])
     end
 
     def set_team_user
