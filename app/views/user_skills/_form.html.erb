@@ -1,0 +1,70 @@
+<div class="container-fluid">
+  <div class="card border-dark mb-3 mx-auto">
+    <div class="card-header text-center">
+      <h3><%= @header %></h3>
+    </div>
+    <%= form_with(model: [@team, @user, @user_skill], local: true) do |form| %>
+      <% if user_skill.errors.any? %>
+      <br>
+      <div class="row">
+        <div class="card text-white bg-danger mx-auto mb-3">
+          <div class="card-header" id="error_explanation">
+            <h4><%= pluralize(user_skill.errors.count, "error") %> prohibited this user_skill from being saved:</h4>
+          </div>
+          <div class="card-body">
+            <ul>
+            <% user_skill.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <% end %>
+
+      <div class="row mt-2">
+        <div class="col-8 offset-2">
+          <div class="form-group">
+            <%= form.text_field :name, class: "form-control", placeholder: "Ex: Field Management, SQL, Public Speaking" %>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6 offset-3">
+          <%= form.radio_button :level, 1, class: "form-check-label" %>
+          <%= form.label :level, "Novice - No experience but interested in learning!" %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6 offset-3">
+          <%= form.radio_button :level, 2, class: "form-check-label" %>
+          <%= form.label :level, "Beginner - I know the basics, and I'm learning the rest!" %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6 offset-3">
+          <%= form.radio_button :level, 3, class: "form-check-label" %>
+          <%= form.label :level, "Intermediate - I'm getting the hang of this, and can answer some questions!" %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6 offset-3">
+          <%= form.radio_button :level, 4, class: "form-check-label" %>
+          <%= form.label :level, "Advanced - I'm very well versed, and can answer almost all questions!" %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6 offset-3">
+          <%= form.radio_button :level, 5, class: "form-check-label" %>
+          <%= form.label :level, "Advanced - I know everything there is to know, and can answer every question!" %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group mx-auto">
+          <%= form.submit "Submit", class: "btn btn-outline-primary" %>
+          <%= link_to 'Back', team_user_path(@team, @user), class: "btn btn-outline-secondary" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

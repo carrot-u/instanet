@@ -11,6 +11,9 @@ Rails.application.routes.draw do
       resources :user_badges, :except => [:destroy, :show, :edit, :update] do
         get '/deactivate', to: 'user_badges#deactivate', as: 'deactivate'
       end
+      resources :user_skills, :except => [:destroy, :show] do
+        get '/deactivate', to: 'user_skills#deactivate', as: 'deactivate'
+      end
     end
   end
 end

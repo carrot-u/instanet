@@ -125,8 +125,27 @@
               <strong>Skills</strong>
             </div>
             <div class="card-body">
-              <h5 class="card-title">Skills would go here</h5>
-              <p class="card-text">Skill tags would go here. Once skill tags exceed a certain number, a link to see all replaces last skill</p>
+              <div class="row mx-2 mt-2 mb-2">
+                <% @user_skills.each do |skill| %>
+                <div class="badge badge-pill badge-primary mx-1 mt-1 mb-1">
+                  <div class="row mx-auto">
+                    <span class="mr-1"><%= skill.name %></span>
+                    <% skill.level.times do %>
+                    <%= image_tag("goldstar", class: "img-fluid", style: "max-height: 10px; width: auto;") %>
+                    <% end %>
+                    <% skill.white_stars.times do %>
+                    <%= image_tag("whitestar", class: "img-fluid", style: "max-height: 10px; width: auto;") %>
+                    <% end %>
+                  </div>
+                </div>
+                <% end %>
+              </div>
+              <div class="row">
+                <div class="mx-auto">
+                  <%= link_to 'See All Skills', team_user_user_skills_path(@team, @user), :class => "btn btn-outline-primary btn-sm" %>
+                  <%= link_to 'Add New Skill!', new_team_user_user_skill_path(@team, @user), :class => "btn btn-primary btn-sm" %>
+                </div>
+              </div>
             </div>
           </div>
         </div>
