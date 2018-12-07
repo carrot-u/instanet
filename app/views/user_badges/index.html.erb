@@ -15,6 +15,11 @@
       </div>
     </div>
     <div class="card-body">
+      <% if @user_badges.empty? %>
+      <div class="col-12 text-center">
+        <h1 class="text-secondary">No Badges Added Yet!</h1>
+      </div>
+      <% end %>
       <% @user_badges.each do |user_badge| %>
       <div class="card mx-auto mt-2">
         <div class="card-body">

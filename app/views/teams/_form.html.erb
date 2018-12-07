@@ -29,7 +29,7 @@
             </div>
             <div class="form-group col-10">
               <%= form.label :parent_team_id %>
-              <%= form.collection_select :parent_team_id, Team.where(active: true).where(is_parent: true), :id, :name, {prompt: "Select Parent Team"}, {class: "form-control"} %>
+              <%= form.collection_select :parent_team_id, Team.where(active: true).where(is_parent: true), :id, :name, {selected: params[:parent_team_id]}, {class: "form-control"} %>
             </div>
             <div class="form-group col-10">
               <%= form.label :manager_id %>
@@ -50,7 +50,7 @@
                 <div class="col-11 form-group">
                   <div class="float-right">
                     <%= form.submit "Submit", class: "btn btn-outline-primary" %>
-                    <%= link_to 'Back', users_path, class: "btn btn-outline-secondary" %>
+                    <%= link_to 'Back', teams_path, class: "btn btn-outline-secondary" %>
                   </div>
                 </div>
               </div>

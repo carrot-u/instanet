@@ -15,6 +15,11 @@
       </div>
     </div>
     <div class="card-body">
+      <% if @user_skills.empty? %>
+      <div class="col-12 text-center">
+        <h1 class="text-secondary">No Skills Added Yet!</h1>
+      </div>
+      <% end %>
       <% @user_skills.each do |skill| %>
       <div class="card mx-auto mt-2">
         <div class="card-body pb-1">

@@ -11,11 +11,10 @@ class User < ApplicationRecord
   validates :is_manager, inclusion: { in: [ true, false ] }
   validates :active, inclusion: { in: [ true, false ] }
   validates :email, presence: true, uniqueness: { case_sensitive: false }, format: { with: /\A[^@\s]+@([^@\s]+\.)+[^@\s]+\z/, message: "Must be a valid e-mail format" }
-  validates :slack, presence: true, uniqueness: { case_sensitive: false }, format: { with: /\A[a-z0-9][a-z0-9._-]*\z/, message: "Must be a valid slack username format" }
+  validates :slack, presence: true, uniqueness: { case_sensitive: false }, format: { with: /\A[a-z0-9][a-z0-9._-]*\z/, message: "Must be a valid slack username format. Don't include the @!" }
   validates :started_at, presence: true
   validates :team, presence: true
 
-  validates_associated :users, :manager, allow_nil: true
   validates_associated :team
 
   def full_name

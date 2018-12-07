@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :searches
   root 'welcome#index'
   resources :welcome, only: [:index]
   get '/users', to: 'welcome#users', as: 'users'

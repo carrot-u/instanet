@@ -1,0 +1,32 @@
+<p id="notice"><%= notice %></p>
+
+<%= form_with(model: @search, local: true) do |form| %>
+  <% if @search.errors.any? %>
+  <br>
+  <div class="row">
+    <div class="card text-white bg-danger mx-auto mb-3">
+      <div class="card-header" id="error_explanation">
+        <h2><%= pluralize(@search.errors.count, "error") %> prohibited this search from being run:</h2>
+      </div>
+      <div class="card-body">
+        <ul>
+        <% @search.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+  </div>
+
+  <div class="row">
+    <div class="col-10 offset-1">
+      <div class="input-group mx-auto">
+        <%= form.text_field :search_term, class: "form-control", placeholder: "Search..." %>
+        <div class="input-group-append">
+          <%= form.submit "Submit", class: "btn btn-primary" %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
