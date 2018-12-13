@@ -5,7 +5,7 @@ class CreateUsers < ActiveRecord::Migration[5.2]
       t.string :last_name
       t.string :title
       t.integer :tier
-      t.references :team, foreign_key: {to_table :teams}
+      t.references :team, foreign_key: {to_table: :teams}
       t.string :email
       t.string :slack
       t.text :bio
