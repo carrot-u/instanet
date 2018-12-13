@@ -7,7 +7,7 @@ class CreateUserBadges < ActiveRecord::Migration[5.2]
       t.string :src
       t.text :description
       t.boolean :active
-      t.references :issued_by, foreign_key: true
+      t.references :issued_by
 
       t.timestamps
     end
