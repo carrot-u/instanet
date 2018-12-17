@@ -1,3 +1,77 @@
 // Place all the styles related to the Welcome controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.welcomeBody{
+  margin: auto;
+  min-height: 15%;
+  background-image: image-url('carrotbg.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  right: -10px;
+  left: -10px;
+}
+
+.mainContent, .vCenter{
+  margin-top: 1em;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+}
+
+.mainContent>h1{
+  font-size: 36px;
+  color: green;
+}
+
+.mainContent>p{
+  font-size: 20 px;
+  color: green;
+  font-style: italic;
+}
+
+.card2{
+  margin-left: 2%;
+}
+
+.card1, .card2 {
+  margin-top: 30px;
+  padding: 20px 40px 40px;
+  max-width: 500px;
+  text-align: left;
+  background: #fff;
+  color: green;
+  border-bottom: 4px solid #ccc;
+  border-radius: 6px;
+}
+
+.card1:hover, .card2:hover {
+  border-color: orange;
+}
+
+.customBtn{
+  margin-top: 1%;
+  background-color: white;
+  border: none;
+  color: green;
+}
+.customBtn>a:hover, .customBtn>a:visited, .customBtn>a:link, .customBtn>a:active {
+    text-decoration: none;
+    border: none;
+    background-color: none;
+}
+
+.customBtn:hover{
+  // margin-top: 1%;
+  // margin-bottom: 1%;
+  background-color: orange;
+  opacity: 0.7;
+}
+
+.imgView{
+  display: inline;
+  height: 250px;
+  max-width: 700px;
+  width: auto;
+  vertical-align: sub;
+}
