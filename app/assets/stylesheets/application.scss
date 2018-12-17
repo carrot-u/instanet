@@ -71,3 +71,13 @@ a:hover, a:visited, a:link, a:active {
 #logo:hover {
   transform: scale(1.5) rotate(360deg);
 }
+
+footer {
+  padding: 8px;
+  color: #fff;
+  font-size: 1em;
+  position: fixed;
+  height: 60px;
+  bottom: 0;
+  width: 100%;
+}
