@@ -1,4 +1,5 @@
 class UserSkillsController < ApplicationController
+  before_action :authenticate
   before_action :set_team_user
   before_action :set_user_skill, only: [:edit, :update]
   before_action :set_user_skill_deactivate, only: [:deactivate]

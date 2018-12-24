@@ -1,4 +1,5 @@
 class TeamsController < ApplicationController
+  before_action :authenticate
   before_action :set_team, only: [:show, :edit, :update, :destroy]
   before_action :set_team_deactivate, only: [:deactivate]
   before_action :set_subteams, only: [:show]

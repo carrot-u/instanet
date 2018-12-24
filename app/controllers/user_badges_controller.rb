@@ -1,4 +1,5 @@
 class UserBadgesController < ApplicationController
+  before_action :authenticate
   before_action :set_user_badge, only: [:deactivate]
   before_action :set_team_user, only: [:new, :create, :index, :deactivate]
 

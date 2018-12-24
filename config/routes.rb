@@ -1,10 +1,20 @@
 Rails.application.routes.draw do
-  resources :searches
   root 'welcome#index'
+
+  get 'login', to: redirect('/auth/google_oauth2'), as: 'login'
+  get 'logout', to: 'sessions#destroy', as: 'logout'
+  get 'auth/:provider/callback', to: 'sessions#create'
+  get 'auth/failure', to: redirect('/')
+
+  resources :searches
+
   resources :welcome, only: [:index]
   get '/users', to: 'welcome#users', as: 'users'
   get '/new_user', to: 'welcome#new_user', as: 'new_user'
+  get '/login_new_user', to: 'welcome#login_new_user', as: 'login_new_user'
   post '/users', to: 'welcome#create_new_user', as: 'create_new_user'
+  patch '/users', to: 'welcome#update', as: 'user'
+
   resources :teams, :except => [:destroy] do
     get '/deactivate', to: 'teams#deactivate', as: 'deactivate'
     resources :users, :except => [:destroy] do

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_12_06_191734) do
+ActiveRecord::Schema.define(version: 2018_12_23_224613) do
 
   create_table "searches", force: :cascade do |t|
     t.text "search_term"
@@ -71,6 +71,10 @@ ActiveRecord::Schema.define(version: 2018_12_06_191734) do
     t.datetime "updated_at", null: false
     t.integer "manager_id"
     t.date "started_at"
+    t.string "google_token"
+    t.string "google_refresh_token"
+    t.integer "google_id", limit: 16
+    t.string "provider"
     t.index ["manager_id"], name: "index_users_on_manager_id"
     t.index ["team_id"], name: "index_users_on_team_id"
   end
