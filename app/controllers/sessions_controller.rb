@@ -6,9 +6,13 @@ class SessionsController < ApplicationController
   	@user = User.find_or_create_from_auth_hash(request.env["omniauth.auth"])
     session[:google_id] = @user.google_id
     if @user.team_id.nil?
-      redirect_to login_new_user_path
+      if Team.all.empty?
+        redirect_to first_team_path
+      else
+        redirect_to login_new_user_path
+      end
     else
-  	  redirect_to root_path
+      redirect_to root_path
     end
   end
 

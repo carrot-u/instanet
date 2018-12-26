@@ -6,15 +6,35 @@ class WelcomeController < ApplicationController
   def index
   end
 
+  def first_team
+    @team = Team.new
+  end
+
+  def create_first_team
+    @team = Team.new(team_params)
+    @team.active = true
+    @team.is_parent = true
+
+    respond_to do |format|
+      if @team.save
+        format.html { redirect_to login_new_user_path, notice: 'First team was successfully created!' }
+        format.json { render :show, status: :created, location: @team }
+      else
+        format.html { render :new }
+        format.json { render json: @team.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def login_new_user
+  end
+
   def users
     @users = User.all.where(active: true).order(:started_at)
   end
 
   def new_user
     @user = User.new
-  end
-
-  def login_new_user
   end
 
   def create_new_user
@@ -49,6 +69,10 @@ class WelcomeController < ApplicationController
 
   def user_params
     params.require(:user).permit(:first_name, :last_name, :title, :tier, :team_id, :email, :slack, :bio, :is_manager, :active, :manager_id, :started_at)
+  end
+
+  def team_params
+    params.require(:team).permit(:name, :description, :active, :is_parent, :parent_team_id, :manager_id)
   end
 
   def set_new_login_user
