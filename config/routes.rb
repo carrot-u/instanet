@@ -9,10 +9,10 @@ Rails.application.routes.draw do
   resources :searches
 
   resources :welcome, only: [:index]
+  get '/nope', to: 'welcome#no_permission', as: 'no_permission'
   get '/users', to: 'welcome#users', as: 'users'
   get '/new_user', to: 'welcome#new_user', as: 'new_user'
   get '/first_team', to: 'welcome#first_team', as: 'first_team'
-  post 'teams', to: 'welcome#create_first_team', as: 'create_first_team'
   get '/login_new_user', to: 'welcome#login_new_user', as: 'login_new_user'
   post '/users', to: 'welcome#create_new_user', as: 'create_new_user'
   patch '/users', to: 'welcome#update', as: 'user'

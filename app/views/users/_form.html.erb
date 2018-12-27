@@ -31,14 +31,19 @@
               <%= form.label :last_name %>
               <%= form.text_field :last_name, class: "form-control" %>
             </div>
-            <div class="form-group col-10">
-              <%= form.label :title %>
-              <%= form.text_field :title, class: "form-control" %>
-            </div>
+            <% if @has_manager_permission || (@has_manager_permission && @has_user_permission) %>
+              <div class="form-group col-10">
+                <%= form.label :title %>
+                <%= form.text_field :title, class: "form-control" %>
+              </div>
+            <% end %>
+            <% if @has_manager_permission || (@has_manager_permission && @has_user_permission) %>
             <div class="form-group col-8">
               <%= form.label :email %>
               <%= form.text_field :email, class: "form-control", placeholder: "name@example.com" %>
             </div>
+            <% end %>
+            <% if @has_manager_permission || (@has_manager_permission && @has_user_permission) %>
             <div class="form-group col-8">
               <%= form.label :slack %>
               <div class="input-group mb-2">
@@ -48,18 +53,27 @@
                 <%= form.text_field :slack, class: "form-control", placeholder: "example.username" %>
               </div>
             </div>
+            <% end %>
           </div>
           <div class="col-6">
+            <% if @has_manager_permission || (@has_manager_permission && @has_user_permission) %>
             <div class="form-group col-10">
+              <% if @user.team_id.nil? %>
+              <% @user_team_id = params[:team_id] %>
+              <% else %>
+              <% @user_team_id = @user.team_id %>
+              <% end %>
               <%= form.label :team_id %>
-              <%= form.collection_select :team_id, Team.where(active: true), :id, :name, {:selected => params[:team_id]}, {class: "form-control"} %>
+              <%= form.collection_select :team_id, Team.where(active: true), :id, :name, {:selected => @user_team_id }, {class: "form-control"} %>
             </div>
+            <% end %>
             <div class="form-group col-11">
               <%= form.label :bio %>
               <%= form.text_area :bio, class: "form-control", rows: "9" %>
             </div>
             <div class="form-group col-11">
               <div class="row">
+                <% if @has_manager_permission || (@has_manager_permission && @has_user_permission) %>
                 <div class="form-group col-6">
                   <%= form.label :manager_id %>
                   <%= form.collection_select :manager_id, User.where(active: true).where(is_manager: true), :id, :full_name, {prompt: "Select Manager"}, {class: "form-control"} %>
@@ -68,12 +82,15 @@
                   <%= form.label :started_at, 'Starting Date' %>
                   <%= form.date_field :started_at, class: "form-control" %>
                 </div>
+                <% end %>
               </div>
               <div class="row">
-                <div class="form-check col-6">
-                  <%= form.label :is_manager, 'Team Manager?' %>
-                  <%= form.check_box :is_manager, class: "form-check-label" %>
-                </div>
+                <% if @has_manager_permission || (@has_manager_permission && @has_user_permission) %>
+                  <div class="form-check col-6">
+                    <%= form.label :is_manager, 'Team Manager?' %>
+                    <%= form.check_box :is_manager, class: "form-check-label" %>
+                  </div>
+                <% end %>
                 <div class="form-group col-6 justify-content-end">
                   <%= form.submit "Submit", class: "btn btn-outline-primary" %>
                   <%= link_to 'Back', team_users_path, class: "btn btn-outline-secondary" %>

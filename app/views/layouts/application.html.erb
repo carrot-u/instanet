@@ -32,6 +32,16 @@
           </ul>
         </div>
       </div>
+
+      <div class="row text-light">
+        <% unless @current_user.nil? %>
+        Email: <%= @current_user.email %>
+        Has Manager Permission: <%= @has_manager_permission %>
+        Has User Permission: <%= @has_user_permission %>
+        Has Permission: <%= @has_manager_permission || (@has_manager_permission && @has_user_permission) %>
+        <% end %>
+      </div>
+
     </div>
     <%= yield %>
     <%= render "layouts/footer" %>

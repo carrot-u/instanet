@@ -8,5 +8,6 @@ class Team < ApplicationRecord
   validates :name, length: { minimum: 2 }
   validates :active, inclusion: { in: [ true, false ] }
   validates :is_parent, inclusion: { in: [ true, false ] }
+  validates :umbrella, inclusion: { in: [ true, false ] }
 
 end

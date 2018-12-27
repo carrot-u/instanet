@@ -1,15 +1,17 @@
 class TeamsController < ApplicationController
   before_action :authenticate
-  before_action :set_team, only: [:show, :edit, :update, :destroy]
+  before_action :set_team, only: [:show, :edit, :update, :deactivate]
   before_action :set_team_deactivate, only: [:deactivate]
   before_action :set_subteams, only: [:show]
+  before_action :set_manager_permission, only: [:show, :new, :create, :edit, :update, :deactivate]
+  before_action :check_manager_permission, only: [:create, :update, :deactivate]
 
   # GET /users
   # GET /users.json
 
   def index
-    unless Team.all.empty?
-      @team = Team.find(1)
+    unless Team.all.where(active: true).empty?
+      @team = Team.all.where(active: true).find_by(umbrella: true)
       redirect_to team_path(@team) and return
     end
   end
@@ -34,6 +36,12 @@ class TeamsController < ApplicationController
   def create
     @team = Team.new(team_params)
     @team.active = true
+    if Team.where(umbrella: true).empty?
+      @team.umbrella = true
+      @team.is_parent = true
+    else
+      @team.umbrella = false
+    end
 
     respond_to do |format|
       if @team.save

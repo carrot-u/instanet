@@ -1,26 +1,16 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
-  helper_method :current_user
+  helper_method :current_user, :set_manager_permission, :set_user_permisson
 
   def authenticate
     redirect_to :login unless user_signed_in?
-    if @pending_profile
-      if Team.all.empty?
-      redirect_to :first_team 
-      else
-      redirect_to :login_new_user
-      end
-    end
   end
 
   def current_user
-    @login_user ||= User.find_by(google_id: session[:google_id]) if session[:google_id]
-    unless @login_user.nil?
-      @current_user = User.find_by(email: @login_user.email)
+    @current_user ||= User.find_by(email: session[:email]) if session[:email]
+    unless @current_user.nil? || Team.all.where(active: true, umbrella: true).empty?
       if @current_user.team_id.nil?
-        @pending_profile = true
-      else
-        @pending_profile = false
+        redirect_to login_new_user_path
       end
     end
     return @current_user
@@ -30,4 +20,42 @@ class ApplicationController < ActionController::Base
     !!current_user
   end
 
+  def set_manager_permission
+    @has_manager_permission = false
+    @managers = User.all.where(team_id: @team.id, is_manager: true).to_a
+    unless @team.parent_team_id.nil?
+    parent_team = Team.find_by(id: @team.parent_team_id)
+      while !parent_team.nil?
+        managers = User.all.where(team_id: parent_team.id, is_manager: true)
+        managers.each do |manager|
+          @managers << manager
+        end
+        parent_team = Team.find_by(id: parent_team.parent_team_id)
+      end
+    end
+    @managers.each do |manager|
+      if @current_user == manager
+        @has_manager_permission = true
+      end
+    end
+  end
+
+  def set_user_permission
+    @has_user_permission = false
+    if @current_user == @user
+      @has_user_permission = true
+    end
+  end
+
+  def check_manager_permission
+    unless @has_manager_permission || @has_umbrella_manager_permission
+      redirect_to no_permission_path
+    end
+  end
+
+  def check_user_permission
+    unless @has_user_permission || @has_manager_permission || @has_umbrella_manager_permission
+      redirect_to no_permission_path
+    end
+  end
 end

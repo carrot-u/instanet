@@ -17,9 +17,11 @@
           <h3><%= @team.name %></h3>
           <% end %>
         </div>
-        <div class="col-3">
-          <%= link_to 'New Team', new_team_path, :class => "float-right btn btn-outline-primary" %>
-        </div>
+        <% if @has_manager_permission %>
+          <div class="col-3">
+            <%= link_to 'New Team', new_team_path, :class => "float-right btn btn-outline-primary" %>
+          </div>
+        <% end %>
       </div>
     </div>
     <div class="card-body">

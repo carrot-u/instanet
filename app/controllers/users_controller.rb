@@ -4,6 +4,10 @@ class UsersController < ApplicationController
   before_action :set_user_deactivate, only: [:deactivate]
   before_action :set_team, only: [:new, :create, :index]
   before_action :set_user_extras, only: [:show]
+  before_action :set_manager_permission, only: [:show, :edit, :index]
+  before_action :set_user_permission, only: [:show, :edit]
+  before_action :check_user_permission, only: [:edit]
+  before_action :check_manager_permission, only: [:create, :edit, :deactivate]
 
   # GET /users
   # GET /users.json

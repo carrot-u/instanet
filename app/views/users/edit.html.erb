@@ -4,9 +4,11 @@
 
 <%= render 'form', user: @user %>
 
-<div class="container">
-  <div class="col-12 text-center">
-    <%= link_to 'Deactivate', team_user_deactivate_path(@team, @user), class: "btn btn-danger" %>
+<% if @has_manager_permission %>
+  <div class="container">
+    <div class="col-12 text-center">
+      <%= link_to 'Deactivate', team_user_deactivate_path(@team, @user), class: "btn btn-danger" %>
+    </div>
   </div>
-</div>
-<br>
+  <br>
+<% end %>

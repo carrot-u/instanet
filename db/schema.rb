@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_12_23_224613) do
+ActiveRecord::Schema.define(version: 2018_12_26_211033) do
 
   create_table "searches", force: :cascade do |t|
     t.text "search_term"
@@ -27,6 +27,7 @@ ActiveRecord::Schema.define(version: 2018_12_23_224613) do
     t.datetime "updated_at", null: false
     t.integer "parent_team_id"
     t.integer "manager_id"
+    t.boolean "umbrella"
     t.index ["manager_id"], name: "index_teams_on_manager_id"
     t.index ["parent_team_id"], name: "index_teams_on_parent_team_id"
   end
