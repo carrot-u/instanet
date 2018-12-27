@@ -3,6 +3,7 @@ class TeamsController < ApplicationController
   before_action :set_team, only: [:show, :edit, :update, :deactivate]
   before_action :set_team_deactivate, only: [:deactivate]
   before_action :set_subteams, only: [:show]
+  before_action :set_parent_team, only: [:new]
   before_action :set_manager_permission, only: [:show, :new, :create, :edit, :update, :deactivate]
   before_action :check_manager_permission, only: [:create, :update, :deactivate]
 
@@ -34,12 +35,14 @@ class TeamsController < ApplicationController
   # POST /users
   # POST /users.json
   def create
-    @team = Team.new(team_params)
-    @team.active = true
-    if Team.where(umbrella: true).empty?
+    if Team.where(active: true).count == 0
+      @team = Team.new(team_params)
+      @team.active = true
       @team.umbrella = true
       @team.is_parent = true
     else
+      @team = Team.new(team_params)
+      @team.active = true
       @team.umbrella = false
     end
 
@@ -86,6 +89,10 @@ class TeamsController < ApplicationController
     def set_team
       @team = Team.find(params[:id])
       @managers = User.all.where(active: true).where(team_id: @team.id).where(is_manager: true)
+    end
+
+    def set_parent_team
+      @team = Team.find(params[:parent_team_id])
     end
 
     def set_team_deactivate

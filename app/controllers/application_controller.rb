@@ -22,7 +22,7 @@ class ApplicationController < ActionController::Base
 
   def set_manager_permission
     @has_manager_permission = false
-    if Team.all.where(active: true, umbrella: true).count == 0
+    if Team.all.where(active: true).count == 0
       @managers = []
       @has_manager_permission = true
     else
