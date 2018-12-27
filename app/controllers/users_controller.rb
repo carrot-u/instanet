@@ -38,6 +38,10 @@ class UsersController < ApplicationController
     @user.active = true
     @user.team_id = @team.id
 
+    if @user.manager_id == @user.id
+      @user.manager_id = nil
+    end
+
     respond_to do |format|
       if @user.save
         format.html { redirect_to team_user_path(@team, @user), notice: 'User was successfully created.' }
@@ -54,6 +58,10 @@ class UsersController < ApplicationController
   def update
     respond_to do |format|
       if @user.update(user_params)
+        if @user.manager_id == @user.id
+          @user.manager_id = nil
+          @user.save!
+        end
         format.html { redirect_to team_user_path(@team, @user), notice: 'User was successfully updated.' }
         format.json { render :show, status: :ok, location: @user }
       else

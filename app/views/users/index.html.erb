@@ -6,15 +6,11 @@
       <div class="card-header text-center">
         <div class="row justify-content-end">
           <div class="col-4">
-            <% if @team.parent_team_id.nil? %>
-            <%= link_to teams_path, :class => "float-left btn btn-outline-primary" do %>
-            Back to Teams
-            <% end %>
-            <% else %>
-            <% @parent_team = Team.find(@team.parent_team_id) %>
-            <%= link_to team_path(@parent_team), :class => "float-left btn btn-outline-secondary" do %>
-            Back to <%= @parent_team.name %>
-            <% end %>
+            <% unless @team.parent_team_id.nil? %>
+              <% @parent_team = Team.find(@team.parent_team_id) %>
+              <%= link_to team_path(@parent_team), :class => "float-left btn btn-outline-secondary" do %>
+              Back to <%= @parent_team.name %>
+              <% end %>
             <% end %>
           </div>
           <div class="col-4">

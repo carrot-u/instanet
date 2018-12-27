@@ -1,9 +1,9 @@
 class WelcomeController < ApplicationController
   before_action :authenticate, only: [:users, :new_user, :create_new_user]
   before_action :set_new_login_user, only: [:login_new_user, :update]
-  before_action :current_user, only: [:index, :users, :new_user]
-  before_action :set_umbrella_manager_permission, only: [:users]
-  before_action :check_manager_permission, only: [:create_new_user]
+  before_action :current_user, only: [:index, :users, :new_user, :create_new_user]
+  before_action :set_umbrella_manager_permission, only: [:users, :new_user, :create_new_user]
+  before_action :check_manager_permission, only: [:create_new_user, :new_user]
 
   def index
   end
@@ -38,6 +38,10 @@ class WelcomeController < ApplicationController
     @user = User.new(user_params)
     @user.active = true
 
+    if @user.manager_id == @user.id
+      @user.manager_id = nil
+    end
+
     respond_to do |format|
       if @user.save
         format.html { redirect_to users_path, notice: 'User was successfully created.' }
@@ -53,6 +57,10 @@ class WelcomeController < ApplicationController
     @user.active = true
     respond_to do |format|
       if @user.update(user_params)
+        if @user.manager_id == @user.id
+          @user.manager_id = nil
+          @user.save!
+        end
         format.html { redirect_to users_path, notice: 'User was successfully updated.' }
         format.json { render :show, status: :ok, location: @user }
       else

@@ -57,6 +57,21 @@
           </div>
           <div class="col-6">
             <% if @has_manager_permission || (@has_manager_permission && @has_user_permission) %>
+            <% teams = [] %>
+            <% teams << Team.find(@current_user.team_id) %>
+            <% if Team.find(@current_user.team_id).is_parent %>
+              <% sub_teams = Team.where(parent_team_id: @current_user.team_id) %>
+              <% sub_teams.each do |team| %>
+                <% teams << team %>
+                <% while team.is_parent %>
+                  <% child_teams = Team.where(parent_team_id: team.id) %>
+                  <% child_teams.each do |child| %>
+                    <% teams << child %>
+                    <% team = child %>
+                  <% end %>
+                <% end %>
+              <% end %>
+            <% end %>
             <div class="form-group col-10">
               <% if @user.team_id.nil? %>
               <% @user_team_id = params[:team_id] %>
@@ -64,7 +79,7 @@
               <% @user_team_id = @user.team_id %>
               <% end %>
               <%= form.label :team_id %>
-              <%= form.collection_select :team_id, Team.where(active: true), :id, :name, {:selected => @user_team_id }, {class: "form-control"} %>
+              <%= form.collection_select :team_id, teams, :id, :name, {:selected => @user_team_id }, {class: "form-control"} %>
             </div>
             <% end %>
             <div class="form-group col-11">

@@ -28,12 +28,23 @@
               <%= form.text_field :name, class: "form-control" %>
             </div>
             <div class="form-group col-10">
+              <% teams = [] %>
+              <% teams << Team.find(@current_user.team_id) %>
+              <% if Team.find(@current_user.team_id).is_parent %>
+                <% sub_teams = Team.where(parent_team_id: @current_user.team_id) %>
+                <% sub_teams.each do |team| %>
+                  <% teams << team %>
+                  <% while team.is_parent %>
+                    <% child_teams = Team.where(parent_team_id: team.id) %>
+                    <% child_teams.each do |child| %>
+                      <% teams << child %>
+                      <% team = child %>
+                    <% end %>
+                  <% end %>
+                <% end %>
+              <% end %>
               <%= form.label :parent_team_id %>
-              <%= form.collection_select :parent_team_id, Team.where(active: true).where(is_parent: true), :id, :name, {selected: params[:parent_team_id]}, {class: "form-control"} %>
-            </div>
-            <div class="form-group col-10">
-              <%= form.label :manager_id %>
-              <%= form.collection_select :manager_id, User.where(active: true).where(is_manager: true), :id, :full_name, {prompt: "Select Manager"}, {class: "form-control"} %>
+              <%= form.collection_select :parent_team_id, teams, :id, :name, {selected: params[:parent_team_id]}, {class: "form-control"} %>
             </div>
             <div class="form-check col-10">
               <%= form.label :is_parent, 'Has Subteams?' %>
@@ -43,7 +54,7 @@
           <div class="col-6">
             <div class="form-group col-11">
               <%= form.label :description %>
-              <%= form.text_area :description, class: "form-control", rows: "9" %>
+              <%= form.text_area :description, class: "form-control", rows: "6" %>
             </div>
             <div class="form-group col-11">
               <div class="row">

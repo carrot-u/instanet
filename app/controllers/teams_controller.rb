@@ -4,8 +4,8 @@ class TeamsController < ApplicationController
   before_action :set_team_deactivate, only: [:deactivate]
   before_action :set_subteams, only: [:show]
   before_action :set_parent_team, only: [:new]
-  before_action :set_manager_permission, only: [:show, :new, :create, :edit, :update, :deactivate]
-  before_action :check_manager_permission, only: [:create, :update, :deactivate]
+  before_action :set_manager_permission, only: [:show, :new, :edit, :update, :deactivate]
+  before_action :check_manager_permission, only: [:new, :edit, :update, :deactivate]
 
   # GET /users
   # GET /users.json
@@ -46,6 +46,10 @@ class TeamsController < ApplicationController
       @team.umbrella = false
     end
 
+    if @team.parent_team_id == @team.id
+      @team.parent_team_id = nil
+    end
+
     respond_to do |format|
       if @team.save
         format.html { redirect_to team_users_path(@team), notice: 'Team was successfully created.' }
@@ -62,6 +66,10 @@ class TeamsController < ApplicationController
   def update
     respond_to do |format|
       if @team.update(team_params)
+        if @team.parent_team_id == @team.id
+          @team.parent_team_id = nil
+          @team.save!
+        end
         format.html { redirect_to team_users_path(@team), notice: 'Team was successfully updated.' }
         format.json { render :show, status: :ok, location: @team }
       else
