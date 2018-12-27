@@ -35,6 +35,10 @@ class TeamsController < ApplicationController
   # POST /users
   # POST /users.json
   def create
+    unless @current_user.is_manager
+      redirect_to no_permission_path
+    end
+
     if Team.where(active: true).count == 0
       @team = Team.new(team_params)
       @team.active = true
@@ -48,6 +52,31 @@ class TeamsController < ApplicationController
 
     if @team.parent_team_id == @team.id
       @team.parent_team_id = nil
+    end
+
+    teams = []
+    teams << Team.find(@current_user.team_id)
+    if Team.find(@current_user.team_id).is_parent
+      sub_teams = Team.where(parent_team_id: @current_user.team_id)
+      sub_teams.each do |team|
+        teams << team
+        while team.is_parent
+          child_teams = Team.where(parent_team_id: team.id)
+          child_teams.each do |child|
+            teams << child
+            team = child
+          end
+        end
+      end
+    end
+    teams.each do |team|
+      if team == Team.find(@team.parent_team_id)
+        @has_permission = true
+      end
+    end
+
+    unless @has_permission
+      redirect_to no_permission_path
     end
 
     respond_to do |format|

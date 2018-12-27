@@ -36,10 +36,34 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     @user.active = true
-    @user.team_id = @team.id
 
     if @user.manager_id == @user.id
       @user.manager_id = nil
+    end
+
+    teams = []
+    teams << Team.find(@current_user.team_id)
+    if Team.find(@current_user.team_id).is_parent
+      sub_teams = Team.where(parent_team_id: @current_user.team_id)
+      sub_teams.each do |team|
+        teams << team
+        while team.is_parent
+          child_teams = Team.where(parent_team_id: team.id)
+          child_teams.each do |child|
+            teams << child
+            team = child
+          end
+        end
+      end
+    end
+    teams.each do |team|
+      if team == Team.find(@user.team_id)
+        @has_permission = true
+      end
+    end
+
+    unless @has_permission
+      redirect_to no_permission_path
     end
 
     respond_to do |format|

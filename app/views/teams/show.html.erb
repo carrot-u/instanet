@@ -19,7 +19,7 @@
         </div>
         <% if @has_manager_permission %>
           <div class="col-3">
-            <%= link_to 'New Team', new_team_path, :class => "float-right btn btn-outline-primary" %>
+            <%= link_to 'New Team', new_team_path(parent_team_id: @team), :class => "float-right btn btn-outline-primary" %>
           </div>
         <% end %>
       </div>
