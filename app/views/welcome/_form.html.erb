@@ -51,8 +51,32 @@
           </div>
           <div class="col-6">
             <div class="form-group col-10">
+              <% teams = [] %>
+              <% managers = [] %>
+              <% if !@current_user %>
+              <% teams = Team.where(active: true) %>
+              <% managers = User.where(active: true, is_manager: true) %>
+              <% else %>
+              <% team = Team.find(@current_user.team_id) %>
+              <% teams << team %>
+              <% team_managers = User.where(active: true, is_manager: true, team_id: @current_user.team_id) %>
+              <% team_managers.each do |manager| %>
+                <% managers << manager %>
+              <% end %>
+              <% while !Team.where(parent_team_id: team.id).empty? %>
+                <% child_teams = Team.where(parent_team_id: team.id) %>
+                <% child_teams.each do |child| %>
+                  <% teams << child %>
+                  <% child_managers = User.where(active: true, is_manager: true, team_id: child.id) %>
+                  <% child_managers.each do |manager| %>
+                    <% managers << manager %>
+                    <% end %>
+                  <% team = child %>
+                <% end %>
+              <% end %>
+              <% end %>
               <%= form.label :team_id %>
-              <%= form.collection_select :team_id, Team.where(active: true), :id, :name, {:selected => params[:team_id]}, {class: "form-control"} %>
+              <%= form.collection_select :team_id, teams, :id, :name, {:selected => params[:team_id]}, {class: "form-control"} %>
             </div>
             <div class="form-group col-11">
               <%= form.label :bio %>
@@ -62,7 +86,7 @@
               <div class="row">
                 <div class="form-group col-6">
                   <%= form.label :manager_id %>
-                  <%= form.collection_select :manager_id, User.where(active: true).where(is_manager: true), :id, :full_name, {prompt: "Select Manager"}, {class: "form-control"} %>
+                  <%= form.collection_select :manager_id, managers, :id, :full_name, {prompt: "Select Manager"}, {class: "form-control"} %>
                 </div>
                 <div class="form-group col-6">
                   <%= form.label :started_at, 'Starting Date' %>

@@ -47,7 +47,7 @@ class UsersController < ApplicationController
       sub_teams = Team.where(parent_team_id: @current_user.team_id)
       sub_teams.each do |team|
         teams << team
-        while team.is_parent
+        while !Team.where(parent_team_id: team.id).empty?
           child_teams = Team.where(parent_team_id: team.id)
           child_teams.each do |child|
             teams << child

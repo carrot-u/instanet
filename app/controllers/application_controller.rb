@@ -57,13 +57,13 @@ class ApplicationController < ActionController::Base
   end
 
   def check_manager_permission
-    unless @has_manager_permission || @has_umbrella_manager_permission
+    unless @has_manager_permission
       redirect_to no_permission_path
     end
   end
 
   def check_user_permission
-    unless @has_user_permission || @has_manager_permission || @has_umbrella_manager_permission
+    unless @has_user_permission || @has_manager_permission
       redirect_to no_permission_path
     end
   end

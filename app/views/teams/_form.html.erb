@@ -29,18 +29,13 @@
             </div>
             <div class="form-group col-10">
               <% teams = [] %>
-              <% teams << Team.find(@current_user.team_id) %>
-              <% if Team.find(@current_user.team_id).is_parent %>
-                <% sub_teams = Team.where(parent_team_id: @current_user.team_id) %>
-                <% sub_teams.each do |team| %>
-                  <% teams << team %>
-                  <% while team.is_parent %>
-                    <% child_teams = Team.where(parent_team_id: team.id) %>
-                    <% child_teams.each do |child| %>
-                      <% teams << child %>
-                      <% team = child %>
-                    <% end %>
-                  <% end %>
+              <% team = Team.find(@current_user.team_id) %>
+              <% teams << team %>
+              <% while !Team.where(parent_team_id: team.id).empty? %>
+                <% child_teams = Team.where(parent_team_id: team.id) %>
+                <% child_teams.each do |child| %>
+                  <% teams << child %>
+                  <% team = child %>
                 <% end %>
               <% end %>
               <%= form.label :parent_team_id %>

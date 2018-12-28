@@ -42,6 +42,31 @@ class WelcomeController < ApplicationController
       @user.manager_id = nil
     end
 
+    teams = []
+    teams << Team.find(@current_user.team_id)
+    if Team.find(@current_user.team_id).is_parent
+      sub_teams = Team.where(parent_team_id: @current_user.team_id)
+      sub_teams.each do |team|
+        teams << team
+        while !Team.where(parent_team_id: team.id).empty?
+          child_teams = Team.where(parent_team_id: team.id)
+          child_teams.each do |child|
+            teams << child
+            team = child
+          end
+        end
+      end
+    end
+    teams.each do |team|
+      if team == Team.find(@user.team_id)
+        @has_permission = true
+      end
+    end
+
+    unless @has_permission
+      redirect_to no_permission_path
+    end
+
     respond_to do |format|
       if @user.save
         format.html { redirect_to users_path, notice: 'User was successfully created.' }
@@ -77,12 +102,10 @@ class WelcomeController < ApplicationController
   end
 
   def set_umbrella_manager_permission
-    @has_umbrella_manager_permission = false
-    umbrella_team_id = Team.all.where(active: true, umbrella: true).first.id
-    @umbrella_managers = User.all.where(team_id: umbrella_team_id, is_manager: true)
-    @umbrella_managers.each do |manager|
+    @managers = User.all.where(is_manager: true)
+    @managers.each do |manager|
       if @current_user == manager
-        @has_umbrella_manager_permission = true
+        @has_manager_permission = true
       end
     end
   end

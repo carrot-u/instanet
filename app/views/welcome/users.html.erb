@@ -3,7 +3,7 @@
 <div class="container text-center font-weight-bold text-secondary">
   <h1 class="display-3">Team Members</h1>
   <br>
-  <% if @has_umbrella_manager_permission %>
+  <% if @has_manager_permission %>
   <%= link_to 'New Team Member', new_user_path, :class => "btn btn-primary" %>
   <% end %>
 </div>
