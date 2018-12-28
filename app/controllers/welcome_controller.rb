@@ -1,7 +1,7 @@
 class WelcomeController < ApplicationController
+  before_action :current_user
   before_action :authenticate, only: [:users, :new_user, :create_new_user]
   before_action :set_new_login_user, only: [:login_new_user, :update]
-  before_action :current_user, only: [:index, :users, :new_user, :create_new_user]
   before_action :set_umbrella_manager_permission, only: [:users, :new_user, :create_new_user]
   before_action :check_manager_permission, only: [:create_new_user, :new_user]
 
