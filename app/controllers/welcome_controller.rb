@@ -1,5 +1,6 @@
 class WelcomeController < ApplicationController
-  before_action :current_user
+  before_action :current_user, only: [:index, :no_permission, :users, :new_user, :create_new_user]
+  before_action :new_current_user, only: [:login_new_user]
   before_action :authenticate, only: [:users, :new_user, :create_new_user]
   before_action :set_new_login_user, only: [:login_new_user, :update]
   before_action :set_umbrella_manager_permission, only: [:users, :new_user, :create_new_user]
@@ -20,9 +21,11 @@ class WelcomeController < ApplicationController
   end
 
   def login_new_user
-    unless @user.team_id.nil?
-      @team = Team.find_by(id: @user.team_id)
-      redirect_to edit_team_user_path(@team, @user)
+    if @current_user.nil?
+      redirect_to login_path and return
+    end
+    unless @current_user.team_id.nil?
+      redirect_to no_permission_path and return
     end
   end
 
@@ -56,10 +59,10 @@ class WelcomeController < ApplicationController
           end
         end
       end
-    end
-    teams.each do |team|
-      if team == Team.find(@user.team_id)
-        @has_permission = true
+      teams.each do |team|
+        if team == Team.find(@user.team_id)
+          @has_permission = true
+        end
       end
     end
 
@@ -118,4 +121,7 @@ class WelcomeController < ApplicationController
     params.require(:team).permit(:name, :description, :active, :is_parent, :parent_team_id, :manager_id)
   end
 
+  def new_current_user
+    @current_user ||= User.find_by(email: session[:email]) if session[:email]
+  end
 end

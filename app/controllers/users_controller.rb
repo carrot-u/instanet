@@ -41,6 +41,10 @@ class UsersController < ApplicationController
       @user.manager_id = nil
     end
 
+    if User.where(active: true, is_manager: true).count == 0
+      @user.is_manager = true
+    end
+
     teams = []
     teams << Team.find(@current_user.team_id)
     if Team.find(@current_user.team_id).is_parent

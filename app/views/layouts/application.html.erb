@@ -44,6 +44,8 @@
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                   <%= link_to 'My Profile', team_user_path(@team, @current_user), :class => "dropdown-item" %>
                   <%= link_to 'My Team', team_path(@team), :class => "dropdown-item" %>
+                  <%= link_to 'My Skills', team_user_user_skills_path(@team, @current_user), :class => "dropdown-item" %>
+                  <%= link_to 'My Badges', team_user_user_badges_path(@team, @current_user), :class => "dropdown-item" %>
                   <%= link_to 'Logout', logout_path, :class => "dropdown-item" %>
                 </div>
               </div>
