@@ -64,7 +64,7 @@
       <div class="row">
         <% @team_results.each do |team| %>
         <% @team_managers = User.all.where(active: true).where(team_id: team.id).where(is_manager: true) %>
-        <div class="card mx-auto mt-2 mb-2" style="max-width: 30rem; min-width: 15rem;">
+        <div class="card mx-auto mt-2 mb-2" style="max-width: 30rem; min-width: 20rem;">
           <%= link_to team_path(team) do %>
           <div class="card-header text-center text-dark">
             <h3><%= team.name %></h3>

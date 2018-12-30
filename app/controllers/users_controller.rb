@@ -1,8 +1,13 @@
 class UsersController < ApplicationController
+  before_action :authenticate
   before_action :set_user, only: [:show, :edit, :update]
   before_action :set_user_deactivate, only: [:deactivate]
   before_action :set_team, only: [:new, :create, :index]
   before_action :set_user_extras, only: [:show]
+  before_action :set_manager_permission, only: [:show, :edit, :new, :create, :update, :index]
+  before_action :set_user_permission, only: [:show, :edit]
+  before_action :check_user_permission, only: [:edit, :update]
+  before_action :check_manager_permission, only: [:new, :create, :deactivate]
 
   # GET /users
   # GET /users.json
@@ -31,7 +36,31 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     @user.active = true
-    @user.team_id = @team.id
+
+    teams = []
+    teams << Team.find(@current_user.team_id)
+    if Team.find(@current_user.team_id).is_parent
+      sub_teams = Team.where(parent_team_id: @current_user.team_id)
+      sub_teams.each do |team|
+        teams << team
+        while !Team.where(parent_team_id: team.id).empty?
+          child_teams = Team.where(parent_team_id: team.id)
+          child_teams.each do |child|
+            teams << child
+            team = child
+          end
+        end
+      end
+    end
+    teams.each do |team|
+      if team == Team.find(@user.team_id)
+        @has_permission = true
+      end
+    end
+
+    unless @has_permission
+      redirect_to no_permission_path
+    end
 
     respond_to do |format|
       if @user.save
@@ -49,6 +78,10 @@ class UsersController < ApplicationController
   def update
     respond_to do |format|
       if @user.update(user_params)
+        if @user.manager_id == @user.id
+          @user.manager_id = nil
+          @user.save!
+        end
         format.html { redirect_to team_user_path(@team, @user), notice: 'User was successfully updated.' }
         format.json { render :show, status: :ok, location: @user }
       else

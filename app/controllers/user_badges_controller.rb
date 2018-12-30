@@ -1,6 +1,8 @@
 class UserBadgesController < ApplicationController
+  before_action :authenticate
   before_action :set_user_badge, only: [:deactivate]
-  before_action :set_team_user, only: [:new, :create, :index, :deactivate]
+  before_action :set_team_user, :set_manager_permission, :set_user_permission, only: [:new, :create, :index, :deactivate]
+  before_action :check_user_permission, only: [:deactivate]
 
   # GET /user_badges
   # GET /user_badges.json

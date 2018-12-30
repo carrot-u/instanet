@@ -1,7 +1,8 @@
 class UserSkillsController < ApplicationController
-  before_action :set_team_user
+  before_action :authenticate, :set_team_user, :set_manager_permission, :set_user_permission
   before_action :set_user_skill, only: [:edit, :update]
   before_action :set_user_skill_deactivate, only: [:deactivate]
+  before_action :check_user_permission, only: [:create, :update, :deactivate]
 
   # GET /user_skills
   # GET /user_skills.json
@@ -75,8 +76,8 @@ class UserSkillsController < ApplicationController
     end
 
     def set_team_user
-      @team = Team.find(params[:team_id])
       @user = User.find(params[:user_id])
+      @team = Team.find(@user.team_id)
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

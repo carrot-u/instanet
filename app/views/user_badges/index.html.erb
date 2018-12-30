@@ -47,9 +47,11 @@
             <div class="col-2">
                 <small> Awarded: <%= user_badge.created_at.strftime("%b, %Y") %></small></span>
             </div>
-            <div class="col-10">
-              <%= link_to 'Remove', team_user_user_badge_deactivate_path(@team, @user, user_badge), class: "float-right btn btn-sm btn-outline-danger" %>
-            </div>
+            <% if @has_manager_permission || @has_user_permission %>
+              <div class="col-10">
+                <%= link_to 'Remove', team_user_user_badge_deactivate_path(@team, @user, user_badge), class: "float-right btn btn-sm btn-outline-danger" %>
+              </div>
+            <% end %>
           </div>
         </div>
       </div>

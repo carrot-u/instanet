@@ -14,7 +14,7 @@
     <div class="container-fluid bg-dark pt-3 pb-3">
       <div class="row">
         <div class="col-12">
-          <%= image_tag("instanetinvert", id: "logo") %>
+          <%= image_tag("instanetinvert", id: "logo", class: "pl-3") %>
           <h1 class="align-top text-light">InstaNet</h1>
           <ul class="nav align-items-center justify-content-end" style="height: 100%">
             <li class="nav-item">
@@ -29,6 +29,28 @@
             <li class="nav-item">
               <%= link_to 'Search', searches_path, :class => "nav-link text-light mx-auto" %>
             </li>
+            <% if !@current_user %>
+            <li class="nav-item">
+              <%= link_to 'Login', login_path, :class => "nav-link text-light mx-auto" %>
+            </li>
+            <% elsif @current_user.team_id.nil? %>
+            <% else %>
+            <% @team = Team.find(@current_user.team_id) %>
+            <li>
+              <div class="dropdown show">
+                <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  My Links
+                </a>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                  <%= link_to 'My Profile', team_user_path(@team, @current_user), :class => "dropdown-item" %>
+                  <%= link_to 'My Team', team_path(@team), :class => "dropdown-item" %>
+                  <%= link_to 'My Skills', team_user_user_skills_path(@team, @current_user), :class => "dropdown-item" %>
+                  <%= link_to 'My Badges', team_user_user_badges_path(@team, @current_user), :class => "dropdown-item" %>
+                  <%= link_to 'Logout', logout_path, :class => "dropdown-item" %>
+                </div>
+              </div>
+            </li>
+            <% end %>
           </ul>
         </div>
       </div>
