@@ -41,10 +41,6 @@
               <%= form.label :parent_team_id %>
               <%= form.collection_select :parent_team_id, teams, :id, :name, {selected: params[:parent_team_id]}, {class: "form-control"} %>
             </div>
-            <div class="form-check col-10">
-              <%= form.label :is_parent, 'Has Subteams?' %>
-              <%= form.check_box :is_parent, class: "form-check-label" %>
-            </div>
           </div>
           <div class="col-6">
             <div class="form-group col-11">

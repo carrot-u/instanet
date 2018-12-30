@@ -48,6 +48,7 @@ class TeamsController < ApplicationController
       @team = Team.new(team_params)
       @team.active = true
       @team.umbrella = false
+      @team.is_parent = false
     end
 
     if @team.parent_team_id == @team.id
@@ -85,6 +86,13 @@ class TeamsController < ApplicationController
 
     respond_to do |format|
       if @team.save
+
+        unless @team.parent_team_id.nil?
+          @parent = Team.find(@team.parent_team_id)
+          @parent.is_parent = true
+          @parent.save
+        end
+
         format.html { redirect_to team_users_path(@team), notice: 'Team was successfully created.' }
         format.json { render :show, status: :created, location: @team }
       else
@@ -103,6 +111,23 @@ class TeamsController < ApplicationController
           @team.parent_team_id = nil
           @team.save!
         end
+
+        @teams = Team.where(active: true)
+        @child_teams = Team.where.not(parent_team_id: nil)
+        @teams.each do |team|
+          @child_teams.each do |child|
+            parent_team = Team.find(child.parent_team_id)
+            if team == parent_team
+              team.is_parent = true
+              team.save!
+            else
+              team.is_parent = false
+              team.save!
+            end
+          end
+        end
+
+
         format.html { redirect_to team_users_path(@team), notice: 'Team was successfully updated.' }
         format.json { render :show, status: :ok, location: @team }
       else

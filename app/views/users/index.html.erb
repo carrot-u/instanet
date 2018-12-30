@@ -1,14 +1,16 @@
+<p><%= @team.is_parent %></p>
 <div class="welcomeBody container-fluid">
   <div class="row">
     <div class="col-xs-3 col-sm-3 col-md-3 d-flex align-items-center justify-content-start">
-      <% if !@team.parent_team_id.nil? %>
+      <% unless Team.where(parent_team_id: @team.id).empty? %>
+        <%= link_to team_path(@team), :class => "float-left btn btn-secondary mr-2" do %>
+        View <%= @team.name %> Structure
+        <% end %>
+      <% end %>
+      <% unless @team.parent_team_id.nil? %>
         <% @parent_team = Team.find(@team.parent_team_id) %>
         <%= link_to team_path(@parent_team), :class => "float-left btn btn-secondary" do %>
         Back to <%= @parent_team.name %>
-        <% end %>
-      <% elsif @team.parent_team_id.nil? && !Team.where(parent_team_id: @team.id).empty? %>
-        <%= link_to team_path(@team), :class => "float-left btn btn-secondary" do %>
-        View <%= @team.name %> Org
         <% end %>
       <% end %>
     </div>
