@@ -85,6 +85,10 @@ class WelcomeController < ApplicationController
           @user.is_manager = true
           @user.save!
         end
+        if @user.email != session[:email]
+          @user.email = session[:email]
+          @user.save!
+        end
         format.html { redirect_to users_path, notice: 'User was successfully updated.' }
         format.json { render :show, status: :ok, location: @user }
       else
