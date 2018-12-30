@@ -35,14 +35,14 @@
   </div>
   <div class="row">
     <div class="col-12 d-flex justify-content-center mt-2">
-      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#teamModal">
         View Managers
       </button>
-      <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal fade" id="teamModal" tabindex="-1" role="dialog" aria-labelledby="teamModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel"><%= @team.name %> Managers</h5>
+              <h5 class="modal-title" id="teamModalLabel"><%= @team.name %> Managers</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -81,7 +81,11 @@
     <h2 class="display-4 mt-2"><%= @team.name %> Subteams:</h2>
   </div>
   <div class="row">
+    <% variable = "a" %>
     <% @subteams.each do |team| %>
+    <% modal_target = "#" + variable + "Modal" %>
+    <% modal_recipient = variable + "Modal" %>
+    <% modal_label = variable + "ModalLabel" %>
     <% subteam_managers = User.all.where(active: true).where(team_id: team.id).where(is_manager: true) %>
       <div class="card mx-auto mt-3 mb-3" style="max-width: 30rem; min-width: 20rem;">
         <%= link_to team_path(team) do %>
@@ -100,14 +104,14 @@
           <% unless subteam_managers.empty? %>
           <div class="row">
             <div class="col-12 d-flex justify-content-center mt-2">
-              <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#exampleModal">
-                View <%= team.name %> Managers
-              </button>
-              <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <%= button_tag "View Managers", :class => "btn btn-outline-primary", data: {toggle: "modal", target: modal_target} %>
+              <%= content_tag :div, class: "modal fade", id: modal_recipient, tabindex: "-1", role: "dialog", 'aria-labelledby': modal_label, 'aria-hidden': "true"  do %>
                 <div class="modal-dialog" role="document">
                   <div class="modal-content">
                     <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModalLabel"><%= team.name %> Managers</h5>
+                      <%= content_tag :h5, class: "modal-title", id: modal_label do %>
+                        <%= team.name %> Managers
+                      <% end %>
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                       </button>
@@ -137,12 +141,13 @@
                     </div>
                   </div>
                 </div>
-              </div>
+              <% end %>
             </div>
           </div>
           <% end %>
         </div>
       </div>
+      <% variable += "a" %>
     <% end %>
   </div>
 </div>
