@@ -11,7 +11,9 @@ class TeamsController < ApplicationController
   # GET /users.json
 
   def index
-    unless Team.all.where(active: true).empty?
+    if Team.all.where(active: true).empty?
+      redirect_to first_team_path
+    else
       @team = Team.all.where(active: true).find_by(umbrella: true)
       redirect_to team_path(@team) and return
     end
