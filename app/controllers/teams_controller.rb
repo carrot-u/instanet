@@ -129,7 +129,7 @@ class TeamsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_team
       @team = Team.find(params[:id])
-      @managers = User.all.where(active: true).where(team_id: @team.id).where(is_manager: true)
+      @team_managers = User.all.where(active: true).where(team_id: @team.id).where(is_manager: true)
     end
 
     def set_parent_team

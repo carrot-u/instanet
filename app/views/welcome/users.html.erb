@@ -17,13 +17,13 @@
       <div class="card-body">
         <%= link_to team_user_path(@team, user) do %>
           <div class="row no-deco">
-            <div class="col-8">
+            <div class="col-8" style="max-width: 205px">
               <h5 class="card-title font-weight-bold text-dark"><%= user.first_name + " " + user.last_name %></h5>
               <h6 class="card-subtitle mb-2 text-muted"><%= @team.name %></h6>
               <small class="card-text text-dark"><%= user.started_at.strftime("%b %Y") %></small>
             </div>
             <div class="col-4">
-              <%= image_tag("avatar", class: "img-fluid rounded-circle", style: "max-height: 100px; width: auto;") %>
+              <%= image_tag("avatar", class: "img-fluid rounded-circle", style: "max-height: 70px; width: auto;") %>
             </div>
           </div>
         <% end %>

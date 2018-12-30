@@ -159,7 +159,7 @@
           <% if @has_user_permission || @has_manager_permission %>
             <%= link_to 'Edit', edit_team_user_path(@team, @user), :class => "btn btn-outline-secondary" %>
           <% end %>
-          <%= link_to team_users_path(@team), :class => "btn btn-outline-primary" do %>
+          <%= link_to team_path(@team), :class => "btn btn-outline-primary" do %>
           Back To <%= @team.name %>
           <% end %>
         </div>
