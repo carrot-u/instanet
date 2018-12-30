@@ -41,10 +41,6 @@ class WelcomeController < ApplicationController
     @user = User.new(user_params)
     @user.active = true
 
-    if @user.manager_id == @user.id
-      @user.manager_id = nil
-    end
-
     teams = []
     teams << Team.find(@current_user.team_id)
     if Team.find(@current_user.team_id).is_parent
@@ -85,8 +81,8 @@ class WelcomeController < ApplicationController
     @user.active = true
     respond_to do |format|
       if @user.update(user_params)
-        if @user.manager_id == @user.id
-          @user.manager_id = nil
+        if User.where(active: true, is_manager: true).empty?
+          @user.is_manager = true
           @user.save!
         end
         format.html { redirect_to users_path, notice: 'User was successfully updated.' }

@@ -7,7 +7,7 @@ class UsersController < ApplicationController
   before_action :set_manager_permission, only: [:show, :edit, :new, :create, :update, :index]
   before_action :set_user_permission, only: [:show, :edit]
   before_action :check_user_permission, only: [:edit, :update]
-  before_action :check_manager_permission, only: [:new, :edit, :create, :update, :deactivate]
+  before_action :check_manager_permission, only: [:new, :create, :deactivate]
 
   # GET /users
   # GET /users.json
@@ -36,14 +36,6 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     @user.active = true
-
-    if @user.manager_id == @user.id
-      @user.manager_id = nil
-    end
-
-    if User.where(active: true, is_manager: true).count == 0
-      @user.is_manager = true
-    end
 
     teams = []
     teams << Team.find(@current_user.team_id)
