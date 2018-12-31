@@ -7,4 +7,3 @@ Rails.application.config.middleware.use OmniAuth::Builder do
     callback_path: '/auth/google_oauth2/callback'
   }
 end
-end
