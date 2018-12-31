@@ -6,7 +6,8 @@ Rails.application.routes.draw do
   get 'auth/:provider/callback', to: 'sessions#create'
   get 'auth/failure', to: redirect('/')
 
-  resources :searches
+  resources :searches, only: [:index, :show, :create]
+  patch '/searches/:id', to: 'searches#create', as: 'create_new_search'
 
   resources :welcome, only: [:index]
   get '/nope', to: 'welcome#no_permission', as: 'no_permission'

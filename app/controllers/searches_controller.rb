@@ -1,15 +1,17 @@
 class SearchesController < ApplicationController
   before_action :authenticate
-  before_action :set_search, only: [:index, :show, :create, :update]
+  before_action :set_searched, only: [:show]
 
   # GET /searches
   # GET /searches.json
   def index
+    @search = Search.new
   end
 
   # GET /searches/1
   # GET /searches/1.json
   def show
+    @search = Search.new
   end
 
   # POST /searches
@@ -28,29 +30,10 @@ class SearchesController < ApplicationController
     end
   end
 
-  # PATCH/PUT /searches/1
-  # PATCH/PUT /searches/1.json
-  def update
-    respond_to do |format|
-      if @search.update(search_params)
-        format.html { redirect_to @search, notice: 'Search succsessful' }
-        format.json { render :show, status: :ok, location: @search }
-      else
-        format.html { render :show }
-        format.json { render json: @search.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_search
-      @searches = Search.all
-      if @searches.empty?
-        @search = Search.new
-      else
-        @search = Search.first
-      end
+    def set_searched
+      @searched = Search.find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

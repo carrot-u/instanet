@@ -35,16 +35,16 @@
   </div>
 <% end %>
 
-<% @team_results = Team.where("name LIKE ?", "%#{@search.search_term}%") %>
+<% @team_results = Team.where("name LIKE ?", "%#{@searched.search_term}%") %>
 <% t = User.arel_table %>
-<% @user_results = User.where(t[:first_name].matches("%#{@search.search_term}%").or(t[:last_name].matches("%#{@search.search_term}%"))).to_a %>
-<% @full_names = User.where("first_name || ' ' || last_name LIKE '%#{@search.search_term}%'") %>
+<% @user_results = User.where(t[:first_name].matches("%#{@searched.search_term}%").or(t[:last_name].matches("%#{@searched.search_term}%"))).to_a %>
+<% @full_names = User.where("first_name || ' ' || last_name LIKE '%#{@searched.search_term}%'") %>
 <% unless @full_names.empty? %>
 <% @full_names.each do |result| %>
 <% @user_results << result %>
 <% end %>
 <% end %>
-<% @skill_results = UserSkill.where("name LIKE ?", "%#{@search.search_term}%") %>
+<% @skill_results = UserSkill.where("name LIKE ?", "%#{@searched.search_term}%") %>
 
 <% if @team_results.empty? && @user_results.empty? && @skill_results.empty? %>
 <div class="col-12 text-center text-muted">
@@ -53,122 +53,149 @@
 <% else %>
 
 <div class="container-fluid">
-  <div class="card border-dark mb-3">
-    <div class="card-body">
-      <% unless @team_results.empty? %>
-      <div class="row">
-        <div class="col-12 text-center mt-2">
-          <h6><%= @team_results.count %> Team<% if @team_results.count >1 %>s<% end %> Found Matching "<%= @search.search_term %>"</h6>
+  <% unless @team_results.empty? %>
+  <div class="row">
+    <div class="col-12 text-center mt-2">
+      <h6><%= @team_results.count %> Team<% if @team_results.count >1 %>s<% end %> Found Matching "<%= @searched.search_term %>"</h6>
+    </div>
+  </div>
+  <div class="row">
+    <% variable = "a" %>
+    <% @team_results.each do |team| %>
+    <% modal_target = "#" + variable + "Modal" %>
+    <% modal_recipient = variable + "Modal" %>
+    <% modal_label = variable + "ModalLabel" %>
+    <% subteam_managers = User.all.where(active: true).where(team_id: team.id).where(is_manager: true) %>
+      <div class="card mx-auto mt-3 mb-3" style="max-width: 30rem; min-width: 20rem;">
+        <%= link_to team_path(team) do %>
+        <div class="card-header text-center text-dark">
+          <h3><%= team.name %></h3>
         </div>
-      </div>
-      <div class="row">
-        <% @team_results.each do |team| %>
-        <% @team_managers = User.all.where(active: true).where(team_id: team.id).where(is_manager: true) %>
-        <div class="card mx-auto mt-2 mb-2" style="max-width: 30rem; min-width: 20rem;">
-          <%= link_to team_path(team) do %>
-          <div class="card-header text-center text-dark">
-            <h3><%= team.name %></h3>
-          </div>
-          <% end %>
-          <div class="card-body">
-            <div class="row">
-              <div class="col-12 text-center">
-                <strong>Managers: </strong>
-              </div>
-            </div>
-            <div class="row">
-              <% @team_managers.each do |user| %>
-              <div class="card mx-auto mt-2 border-clear" style="max-width 10rem;">
-                <div class="card-body no-deco px-0 py-0">
-                  <%= link_to team_user_path(team, user) do %>
-                  <div class="row">
-                    <div class="col-12">
-                      <%= image_tag("avatar", class: "img-fluid rounded-circle", style: "max-height: 50px; width: auto;") %>
-                    </div>
-                  </div>
-                  <div class="row no-deco">
-                    <div class="col-12 text-center text-dark">
-                      <small><%= user.first_name + " " + user.last_name %></small>
-                    </div>
-                  </div>
-                  <% end %>
-                </div>
-              </div>
+        <% end %>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-12 d-flex align-items-center">
+              <%= link_to team_path(team), :class => "mx-auto btn btn-outline-primary btn-lg" do %>
+              View <%= team.name %>
               <% end %>
             </div>
           </div>
-        </div>
-        <% end %>
-      </div>
-      <% end %>
-      <% unless @user_results.empty? %>
-      <div class="row">
-        <div class="col-12 text-center mt-2">
-          <h6><%= @user_results.uniq.count %> Team Member<% if @user_results.count >1 %>s<% end %> Found Matching "<%= @search.search_term %>"</h6>
-        </div>
-      </div>
-      <div class="row">
-        <% @user_results.uniq.each do |user| %>
-        <% @team = Team.find(user.team_id) %>
-        <div class="card mx-auto mt-2 mb-2" style="min-width: 20rem;">
-          <div class="card-body">
-            <%= link_to team_user_path(@team, user) do %>
-              <div class="row no-deco">
-                <div class="col-8">
-                  <h5 class="card-title font-weight-bold text-dark"><%= user.first_name + " " + user.last_name %></h5>
-                  <h6 class="card-subtitle mb-2 text-muted"><%= @team.name %></h6>
-                  <small class="card-text text-dark"><%= user.started_at.strftime("%b %Y") %></small>
-                </div>
-                <div class="col-4">
-                  <%= image_tag("avatar", class: "img-fluid rounded-circle", style: "max-height: 100px; width: auto;") %>
-                </div>
-              </div>
-            <% end %>
-          </div>
-        </div>
-        <% end %>
-      </div>
-      <% end %>
-      <% unless @skill_results.empty? %>
-      <div class="row">
-        <div class="col-12 text-center mt-2">
-          <h6><%= @skill_results.count %> Skilled User<% if @user_results.count >1 %>s<% end %> Found Matching "<%= @search.search_term %>"</h6>
-        </div>
-      </div>
-      <div class="row">
-        <% @skill_results.each do |skill| %>
-        <% @user = User.find(skill.user_id) %>
-        <% @team = Team.find(@user.team_id) %>
-        <div class="card mx-auto mt-2 mb-2" style="min-width: 20rem;">
-          <div class="card-body">
-            <%= link_to team_user_path(@team, @user) do %>
-              <div class="row no-deco">
-                <div class="col-8">
-                  <h5 class="card-title font-weight-bold text-dark"><%= @user.first_name + " " + @user.last_name %></h5>
-                  <h6 class="card-subtitle mb-2 text-muted"><%= skill.name %></h6>
-                  <div class="badge badge-pill badge-primary mx-1 mt-1 mb-1">
-                    <div class="row mx-auto">
-                      <% skill.level.times do %>
-                      <%= image_tag("goldstar", class: "img-fluid", style: "max-height: 10px; width: auto;") %>
+          <% unless subteam_managers.empty? %>
+          <div class="row">
+            <div class="col-12 d-flex justify-content-center mt-2">
+              <%= button_tag "View Managers", :class => "btn btn-outline-primary", data: {toggle: "modal", target: modal_target} %>
+              <%= content_tag :div, class: "modal fade", id: modal_recipient, tabindex: "-1", role: "dialog", 'aria-labelledby': modal_label, 'aria-hidden': "true"  do %>
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <%= content_tag :h5, class: "modal-title", id: modal_label do %>
+                        <%= team.name %> Managers
                       <% end %>
-                      <% skill.white_stars.times do %>
-                      <%= image_tag("whitestar", class: "img-fluid", style: "max-height: 10px; width: auto;") %>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <% subteam_managers.each do |user| %>
+                      <div class="card mx-auto mt-2 border-clear" style="max-width 10rem;">
+                        <div class="card-body no-deco px-0 py-0">
+                          <%= link_to team_user_path(team, user) do %>
+                          <div class="row">
+                            <div class="col-12">
+                              <%= image_tag("avatar", class: "img-fluid rounded-circle", style: "max-height: 50px; width: auto;") %>
+                            </div>
+                          </div>
+                          <div class="row no-deco">
+                            <div class="col-12 text-center text-dark">
+                              <small><%= user.first_name + " " + user.last_name %></small>
+                            </div>
+                          </div>
+                          <% end %>
+                        </div>
+                      </div>
                       <% end %>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     </div>
                   </div>
                 </div>
-                <div class="col-4">
-                  <%= image_tag("avatar", class: "img-fluid rounded-circle", style: "max-height: 100px; width: auto;") %>
-                </div>
-              </div>
-            <% end %>
+              <% end %>
+            </div>
           </div>
+          <% end %>
         </div>
-        <% end %>
       </div>
-      <% end %>
+      <% variable += "a" %>
+    <% end %>
+  </div>
+  <% end %>
+  <% unless @user_results.empty? %>
+  <div class="row">
+    <div class="col-12 text-center mt-2">
+      <h6><%= @user_results.uniq.count %> Team Member<% if @user_results.count >1 %>s<% end %> Found Matching "<%= @searched.search_term %>"</h6>
     </div>
   </div>
+  <div class="row">
+    <% @user_results.uniq.each do |user| %>
+    <% @team = Team.find(user.team_id) %>
+    <div class="card mx-auto mt-2 mb-2" style="min-width: 20rem;">
+      <div class="card-body">
+        <%= link_to team_user_path(@team, user) do %>
+          <div class="row no-deco">
+            <div class="col-8">
+              <h5 class="card-title font-weight-bold text-dark"><%= user.first_name + " " + user.last_name %></h5>
+              <h6 class="card-subtitle mb-2 text-muted"><%= @team.name %></h6>
+              <small class="card-text text-dark"><%= user.started_at.strftime("%b %Y") %></small>
+            </div>
+            <div class="col-4">
+              <%= image_tag("avatar", class: "img-fluid rounded-circle", style: "max-height: 100px; width: auto;") %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+    <% end %>
+  </div>
+  <% end %>
+  <% unless @skill_results.empty? %>
+  <div class="row">
+    <div class="col-12 text-center mt-2">
+      <h6><%= @skill_results.count %> Skilled User<% if @user_results.count >1 %>s<% end %> Found Matching "<%= @searched.search_term %>"</h6>
+    </div>
+  </div>
+  <div class="row">
+    <% @skill_results.each do |skill| %>
+    <% @user = User.find(skill.user_id) %>
+    <% @team = Team.find(@user.team_id) %>
+    <div class="card mx-auto mt-2 mb-2" style="min-width: 20rem;">
+      <div class="card-body">
+        <%= link_to team_user_path(@team, @user) do %>
+          <div class="row no-deco">
+            <div class="col-8">
+              <h5 class="card-title font-weight-bold text-dark"><%= @user.first_name + " " + @user.last_name %></h5>
+              <h6 class="card-subtitle mb-2 text-muted"><%= skill.name %></h6>
+              <div class="badge badge-pill badge-primary mx-1 mt-1 mb-1">
+                <div class="row mx-auto">
+                  <% skill.level.times do %>
+                  <%= image_tag("goldstar", class: "img-fluid", style: "max-height: 10px; width: auto;") %>
+                  <% end %>
+                  <% skill.white_stars.times do %>
+                  <%= image_tag("whitestar", class: "img-fluid", style: "max-height: 10px; width: auto;") %>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+            <div class="col-4">
+              <%= image_tag("avatar", class: "img-fluid rounded-circle", style: "max-height: 100px; width: auto;") %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+    <% end %>
+  </div>
+  <% end %>
 </div>
 
 <% end %>
