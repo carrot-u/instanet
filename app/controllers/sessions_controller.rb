@@ -3,7 +3,10 @@ class SessionsController < ApplicationController
   end
 
   def create
-  	@user = User.find_or_create_from_auth_hash(request.env["omniauth.auth"])
+  	@user = User.where(email: request.env["omniauth.auth"].info.email).first_or_initialize.tap do |user|
+      user.email = request.env["omniauth.auth"].info.email
+      user.save!(validate: false)
+    end
     session[:email] = @user.email
     if @user.team_id.nil?
       if Team.all.where(active: true, umbrella: true).empty?

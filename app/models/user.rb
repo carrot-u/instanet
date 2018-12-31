@@ -29,17 +29,4 @@ class User < ApplicationRecord
       user.save!(validate: false)
     end
   end
-
-  # def self.find_or_create_from_auth_hash(auth)
-  #   where(provider: auth.provider, google_id: auth.uid).first_or_initialize.tap do |user|
-  #     unless User.find_by(email: auth.info.email).nil?
-  #       user = User.find_by(email: auth.info.email)
-  #     end
-  #     user.provider = auth.provider
-  #     user.google_id = auth.uid
-  #     user.email = auth.info.email
-  #     user.save!(validate: false)
-  #   end
-  # end
-
 end
