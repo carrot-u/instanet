@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   get 'logout', to: 'sessions#destroy', as: 'logout'
   get 'auth/:provider/callback', to: 'sessions#create'
   get 'auth/failure', to: redirect('/')
+  get 'google5e8c349d90dac164.html', to: 'welcome#google5e8c349d90dac164', as: 'google5e8c349d90dac164'
 
   resources :searches, only: [:index, :show, :create]
   patch '/searches/:id', to: 'searches#create', as: 'create_new_search'
