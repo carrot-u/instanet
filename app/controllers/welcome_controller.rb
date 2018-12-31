@@ -12,9 +12,6 @@ class WelcomeController < ApplicationController
   def no_permission
   end
 
-  def google5e8c349d90dac164
-  end
-
   def first_team
     if !Team.all.where(active: true, umbrella: true).count == 0
       redirect_to no_permission_path
