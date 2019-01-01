@@ -15,7 +15,7 @@
     <div class="card1 col-xs-4 col-sm-4 col-md-4">
       <h2 class="form-signin-heading">Instructions</h2>
       <button type="button" class="customBtn btn btn-info btn-lg" data-toggle="modal" data-target="#myModal1">
-        To Add a Team
+        To Add Teams
       </button>
       <div class="modal fade" id="myModal1" role="dialog">
         <div class="modal-dialog modal-lg">
@@ -25,14 +25,23 @@
             </div>
             <div class="modal-body">
               <div>
-                Step 1: <br/>
-                <%= image_tag("instaNetHome", id: "addTeamImg1", class: "imgView") %>
+                Step 1 - Log In: <br/>
+                <%= image_tag("signIn", id: "signInImg1", class: "imgView") %>
                 <br/>
-                Step 2:<br/>
-                <%= image_tag("instaNetTeam1", id: "addTeamImg2", class: "imgView") %>
                 <br/>
-                Step 3:<br/>
-                <%= image_tag("instaNetTeam2", id: "addTeamImg3", class: "imgView") %>
+                Step 2 - Create First Team: <br/>
+                <%= image_tag("addTeamImg1", id: "addTeamImg1", class: "imgView") %>
+                <br/>
+                <br/>
+                Step 3 - Create First User:<br/>
+                <%= image_tag("signIn1", id: "signIn1", class: "imgView") %>
+                <br/>
+                <br/>
+                Step 4 - Add Team from Team Page (Must be Manager):<br/>
+                <%= image_tag("addTeamImg2", id: "addTeamImg2", class: "imgView") %>
+                <br/>
+                Or Add Team from Organization Page (Must be Manager):<br/>
+                <%= image_tag("addTeamImg3", id: "addTeamImg3", class: "imgView") %>
               </div>
             </div>
             <div class="modal-footer">
@@ -53,12 +62,35 @@
             </div>
             <div class="modal-body">
               <div>
-                Step 1: <br/>
-                <%= image_tag("instaNetTeamMember1", id: "addTeamMemberImg1", class: "imgView") %>
+                Step 1 - Log In As Manager: <br/>
+                <%= image_tag("signIn", id: "signInImg1", class: "imgView") %>
                 <br/>
-                Step 2:<br/>
-                <%= image_tag("instaNetTeamMember2", id: "addTeamMemberImg2", class: "imgView") %>
                 <br/>
+                Step 2 - Go to Team Members Index:<br/>
+                <%= image_tag("addTeamMember", id: "addTeamMember", class: "imgView") %>
+                <br/>
+                <br/>
+                Step 3 - Select "New Team Member":<br/>
+                <%= image_tag("addTeamMember1", id: "addTeamMember1", class: "imgView") %>
+                <br/>
+                <br/>
+                Step 4 - Complete Form and Submit:<br/>
+                <%= image_tag("addTeamMember2", id: "addTeamMember2", class: "imgView") %>
+                <br/>
+                <br/>
+                or
+                <br/>
+                <br/>
+                Step 2 - Go to Team Page:<br/>
+                <%= image_tag("addTeamMember4", id: "addTeamMember4", class: "imgView") %>
+                <br/>
+                <br/>
+                Step 3 - Select "New Team Member":<br/>
+                <%= image_tag("addTeamMember3", id: "addTeamMember3", class: "imgView") %>
+                <br/>
+                <br/>
+                Step 4 - Complete Form and Submit:<br/>
+                <%= image_tag("addTeamMember2", id: "addTeamMember2", class: "imgView") %>
               </div>
             </div>
             <div class="modal-footer">
@@ -69,18 +101,24 @@
       </div>
       </br>
       <button type="button" class="customBtn btn btn-info btn-lg" data-toggle="modal" data-target="#myModal3">
-        To Browse - "Anything"
+        To Search
       </button>
       <div class="modal fade" id="myModal3" role="dialog">
         <div class="modal-dialog modal-lg">
           <div class="modal-content ">
             <div class="modal-header">
-              <h4 class="modal-title">Instructions To Browse - "almost anything"</h4>
+              <h4 class="modal-title">Instructions To Browse Teams, Team Members, and Skills</h4>
             </div>
             <div class="modal-body">
               <div>
-                Step 1: <br/>
-                <%= image_tag("instaNetSearch", id: "searchPageImg", class: "imgView") %>
+                Step 1 - Go to search page: <br/>
+                <%= image_tag("search", id: "search", class: "imgView") %>
+                <br/>
+                <br/>
+                Step 2 - Submit search: <br/>
+                <%= image_tag("search1", id: "search1", class: "imgView") %>
+                <br/>
+                <br/>
               </div>
             </div>
             <div class="modal-footer">

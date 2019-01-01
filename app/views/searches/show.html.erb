@@ -1,3 +1,13 @@
+<div class="welcomeBody container-fluid">
+  <div class="row">
+    <div class="col-xs-3 col-sm-3 col-md-3"></div>
+    <div class="mainContent col-xs-6 col-sm-6 col-md-6">
+      <h1 class="tag name">Search the Network</h1>
+      <p class="tag location">"Find Teams, Team Members, or Team Members with specific Skills!"</p>
+    </div>
+    <div class="col-xs-3 col-sm-3 col-md-3"></div>
+  </div>
+</div>
 <br>
 <%= form_with(model: @search, local: true) do |form| %>
   <% if @search.errors.any? %>
@@ -35,16 +45,16 @@
   </div>
 <% end %>
 
-<% @team_results = Team.where("name LIKE ?", "%#{@searched.search_term}%") %>
+<% @team_results = Team.where(active: true).where("name LIKE ?", "%#{@searched.search_term}%") %>
 <% t = User.arel_table %>
-<% @user_results = User.where(t[:first_name].matches("%#{@searched.search_term}%").or(t[:last_name].matches("%#{@searched.search_term}%"))).to_a %>
-<% @full_names = User.where("first_name || ' ' || last_name LIKE '%#{@searched.search_term}%'") %>
+<% @user_results = User.where(active: true).where(t[:first_name].matches("%#{@searched.search_term}%").or(t[:last_name].matches("%#{@searched.search_term}%"))).to_a %>
+<% @full_names = User.where(active: true).where("first_name || ' ' || last_name LIKE '%#{@searched.search_term}%'") %>
 <% unless @full_names.empty? %>
 <% @full_names.each do |result| %>
 <% @user_results << result %>
 <% end %>
 <% end %>
-<% @skill_results = UserSkill.where("name LIKE ?", "%#{@searched.search_term}%") %>
+<% @skill_results = UserSkill.where(active: true).where("name LIKE ?", "%#{@searched.search_term}%") %>
 
 <% if @team_results.empty? && @user_results.empty? && @skill_results.empty? %>
 <div class="col-12 text-center text-muted">
