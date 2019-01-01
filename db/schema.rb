@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_12_26_211033) do
+ActiveRecord::Schema.define(version: 2019_01_01_193630) do
 
   create_table "searches", force: :cascade do |t|
     t.text "search_term"
@@ -76,6 +76,7 @@ ActiveRecord::Schema.define(version: 2018_12_26_211033) do
     t.string "google_refresh_token"
     t.integer "google_id", limit: 16
     t.string "provider"
+    t.string "photo"
     t.index ["manager_id"], name: "index_users_on_manager_id"
     t.index ["team_id"], name: "index_users_on_team_id"
   end

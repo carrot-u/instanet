@@ -112,7 +112,11 @@
                           <%= link_to team_user_path(team, user) do %>
                           <div class="row">
                             <div class="col-12">
-                              <%= image_tag("avatar", class: "img-fluid rounded-circle", style: "max-height: 50px; width: auto;") %>
+                              <% if user.photo.nil? %>
+                                <%= image_tag("avatar", class: "img-fluid rounded-circle", style: "max-height: 70px; width: auto;") %>
+                              <% else %>
+                                <%= image_tag(user.photo, class: "img-fluid rounded-circle", style: "max-height: 70px; width: auto;") %>
+                              <% end %>
                             </div>
                           </div>
                           <div class="row no-deco">
@@ -159,7 +163,11 @@
               <small class="card-text text-dark"><%= user.started_at.strftime("%b %Y") %></small>
             </div>
             <div class="col-4">
-              <%= image_tag("avatar", class: "img-fluid rounded-circle", style: "max-height: 100px; width: auto;") %>
+              <% if user.photo.nil? %>
+                <%= image_tag("avatar", class: "img-fluid rounded-circle", style: "max-height: 70px; width: auto;") %>
+              <% else %>
+                <%= image_tag(user.photo, class: "img-fluid rounded-circle", style: "max-height: 70px; width: auto;") %>
+              <% end %>
             </div>
           </div>
         <% end %>
@@ -197,7 +205,11 @@
               </div>
             </div>
             <div class="col-4">
-              <%= image_tag("avatar", class: "img-fluid rounded-circle", style: "max-height: 100px; width: auto;") %>
+              <% if @user.photo.nil? %>
+                <%= image_tag("avatar", class: "img-fluid rounded-circle", style: "max-height: 70px; width: auto;") %>
+              <% else %>
+                <%= image_tag(@user.photo, class: "img-fluid rounded-circle", style: "max-height: 70px; width: auto;") %>
+              <% end %>
             </div>
           </div>
         <% end %>

@@ -25,6 +25,7 @@ class User < ApplicationRecord
     where(email: auth.info.email).first_or_initialize.tap do |user|
       user.provider = auth.provider
       user.email = auth.info.email
+      user.photo = auth.info.image
       user.save!(validate: false)
     end
   end

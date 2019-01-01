@@ -17,7 +17,11 @@
     </div>
     <div class="card-body text-dark">
       <div class="col-md text-center">
-        <%= image_tag("avatar", class: "img-fluid rounded-circle", style: "max-height: 300px; width: auto;") %>
+        <% if @user.photo.nil? %>
+          <%= image_tag("avatar", class: "img-fluid rounded-circle", style: "max-height: 300px; width: auto;") %>
+        <% else %>
+          <%= image_tag(@user.photo, class: "img-fluid rounded-circle", style: "max-height: 300px; width: auto;") %>
+        <% end %>
       </div>
       <h5 class="card-title text-center pt-3 pb-0 mb-0"><%= @user.first_name + " " + @user.last_name %></h5>
       <p class="card-text text-muted text-center pt-0 mt-0 pb-0 mb-2">

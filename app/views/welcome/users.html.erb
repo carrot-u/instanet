@@ -28,7 +28,11 @@
               <small class="card-text text-dark"><%= user.started_at.strftime("%b %Y") %></small>
             </div>
             <div class="col-4">
-              <%= image_tag("avatar", class: "img-fluid rounded-circle", style: "max-height: 70px; width: auto;") %>
+              <% if user.photo.nil? %>
+                <%= image_tag("avatar", class: "img-fluid rounded-circle", style: "max-height: 70px; width: auto;") %>
+              <% else %>
+                <%= image_tag(user.photo, class: "img-fluid rounded-circle", style: "max-height: 70px; width: auto;") %>
+              <% end %>
             </div>
           </div>
         <% end %>
