@@ -65,8 +65,8 @@
             <% team_managers.each do |manager| %>
               <% managers << manager %>
             <% end %>
-            <% while !Team.where(parent_team_id: team.id).empty? %>
-              <% child_teams = Team.where(parent_team_id: team.id) %>
+            <% while !Team.where(active: true, parent_team_id: team.id).empty? %>
+              <% child_teams = Team.where(active: true, parent_team_id: team.id) %>
               <% child_teams.each do |child| %>
                 <% teams << child %>
                 <% child_managers = User.where(active: true, is_manager: true, team_id: child.id) %>
