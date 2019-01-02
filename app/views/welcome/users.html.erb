@@ -1,12 +1,12 @@
 <div class="welcomeBody container-fluid">
   <div class="row">
-    <div class="col-xs-3 col-sm-3 col-md-3 d-flex align-items-center justify-content-start">
+    <div class="col-3 d-flex align-items-center justify-content-start">
     </div>
-    <div class="mainContent col-xs-6 col-sm-6 col-md-6">
+    <div class="mainContent col-6">
       <h1 class="tag name">Team Members</h1>
       <p class="tag location">A full list of all carrots!</p>
     </div>
-    <div class="col-xs-3 col-sm-3 col-md-3 d-flex align-items-center justify-content-end">
+    <div class="col-3 d-flex align-items-center justify-content-end">
       <% if @has_manager_permission %>
       <%= link_to 'New Team Member', new_user_path, :class => "btn btn-primary" %>
       <% end %>
