@@ -56,6 +56,9 @@
     <div class="container-fluid">
       <div class="row">
         <% @managers.each do |user| %>
+        <% unless user.manager_id.nil? %>
+        <% @user_manager = User.find(user.manager_id) %>
+        <% end %>
         <div class="card mx-auto mt-2" style="min-width: 20rem;">
           <div class="card-body">
             <%= link_to team_user_path(@team, user) do %>
@@ -63,6 +66,9 @@
               <div class="col-8" style="max-width: 205px">
                 <h5 class="card-title font-weight-bold text-dark"><%= user.first_name + " " + user.last_name %></h5>
                 <h6 class="card-subtitle mb-2 text-muted"><%= user.title %></h6>
+                <% unless user.manager_id.nil? %>
+                <small class="card-text text-dark">Reports To: <%= @user_manager.last_name + ", " + @user_manager.first_name %></small>
+                <% end %>
               </div>
               <div class="col-4">
                 <% if user.photo.nil? %>
