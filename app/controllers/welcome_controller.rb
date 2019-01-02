@@ -41,31 +41,6 @@ class WelcomeController < ApplicationController
     @user = User.new(user_params)
     @user.active = true
 
-    teams = []
-    teams << Team.find(@current_user.team_id)
-    if Team.find(@current_user.team_id).is_parent
-      sub_teams = Team.where(parent_team_id: @current_user.team_id)
-      sub_teams.each do |team|
-        teams << team
-        while !Team.where(parent_team_id: team.id).empty?
-          child_teams = Team.where(parent_team_id: team.id)
-          child_teams.each do |child|
-            teams << child
-            team = child
-          end
-        end
-      end
-      teams.each do |team|
-        if team == Team.find(@user.team_id)
-          @has_permission = true
-        end
-      end
-    end
-
-    unless @has_permission
-      redirect_to no_permission_path
-    end
-
     respond_to do |format|
       if @user.save
         format.html { redirect_to users_path, notice: 'User was successfully created.' }

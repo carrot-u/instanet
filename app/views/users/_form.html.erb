@@ -57,25 +57,8 @@
           </div>
           <div class="col-6">
             <% if @has_manager_permission || (@has_manager_permission && @has_user_permission) %>
-            <% teams = [] %>
-            <% managers = [] %>
-            <% team = Team.find(@current_user.team_id) %>
-            <% teams << team %>
-            <% team_managers = User.where(active: true, is_manager: true, team_id: @current_user.team_id) %>
-            <% team_managers.each do |manager| %>
-              <% managers << manager %>
-            <% end %>
-            <% while !Team.where(active: true, parent_team_id: team.id).empty? %>
-              <% child_teams = Team.where(active: true, parent_team_id: team.id) %>
-              <% child_teams.each do |child| %>
-                <% teams << child %>
-                <% child_managers = User.where(active: true, is_manager: true, team_id: child.id) %>
-                <% child_managers.each do |manager| %>
-                  <% managers << manager %>
-                  <% end %>
-                <% team = child %>
-              <% end %>
-            <% end %>
+            <% teams = Team.where(active: true) %>
+            <% managers = User.where(active: true, is_manager: true) %>
             <div class="form-group col-10">
               <% if @user.team_id.nil? %>
               <% @user_team_id = params[:team_id] %>

@@ -57,35 +57,6 @@ class TeamsController < ApplicationController
       @team.parent_team_id = nil
     end
 
-    if Team.where(active: true, umbrella: true).count == 0
-      @has_permission = true
-    else
-      teams = []
-      teams << Team.find(@current_user.team_id)
-      if Team.find(@current_user.team_id).is_parent
-        sub_teams = Team.where(parent_team_id: @current_user.team_id)
-        sub_teams.each do |team|
-          teams << team
-          while !Team.where(parent_team_id: team.id).empty?
-            child_teams = Team.where(parent_team_id: team.id)
-            child_teams.each do |child|
-              teams << child
-              team = child
-            end
-          end
-        end
-      end
-      teams.each do |team|
-        if team == Team.find(@team.parent_team_id)
-          @has_permission = true
-        end
-      end
-    end
-
-    unless @has_permission
-      redirect_to no_permission_path
-    end
-
     respond_to do |format|
       if @team.save
 

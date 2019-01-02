@@ -28,16 +28,7 @@
               <%= form.text_field :name, class: "form-control" %>
             </div>
             <div class="form-group col-10">
-              <% teams = [] %>
-              <% team = Team.find(@current_user.team_id) %>
-              <% teams << team %>
-              <% while !Team.where(parent_team_id: team.id).empty? %>
-                <% child_teams = Team.where(parent_team_id: team.id) %>
-                <% child_teams.each do |child| %>
-                  <% teams << child %>
-                  <% team = child %>
-                <% end %>
-              <% end %>
+              <% teams = Team.where(active: true) %>
               <%= form.label :parent_team_id %>
               <%= form.collection_select :parent_team_id, teams, :id, :name, {selected: params[:parent_team_id]}, {class: "form-control"} %>
             </div>
