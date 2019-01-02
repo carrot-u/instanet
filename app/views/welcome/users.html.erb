@@ -25,7 +25,7 @@
             <div class="col-8" style="max-width: 205px">
               <h5 class="card-title font-weight-bold text-dark"><%= user.first_name + " " + user.last_name %></h5>
               <h6 class="card-subtitle mb-2 text-muted"><%= @team.name %></h6>
-              <small class="card-text text-dark"><%= user.started_at.strftime("%b %Y") %></small>
+              <small class="card-text text-dark"><%= user.title %></small>
             </div>
             <div class="col-4">
               <% if user.photo.nil? %>
