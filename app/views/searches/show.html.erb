@@ -45,16 +45,18 @@
   </div>
 <% end %>
 
-<% @team_results = Team.where(active: true).where("name LIKE ?", "%#{@searched.search_term}%") %>
-<% t = User.arel_table %>
-<% @user_results = User.where(active: true).where(t[:first_name].matches("%#{@searched.search_term}%").or(t[:last_name].matches("%#{@searched.search_term}%"))).to_a %>
+<% t = Team.arel_table %>
+<% @team_results = Team.where(active: true).where(t[:name].lower.matches("%#{@searched.search_term.downcase}%")) %>
+<% u = User.arel_table %>
+<% @user_results = User.where(active: true).where(u[:first_name].lower.matches("%#{@searched.search_term.downcase}%").or(u[:last_name].lower.matches("%#{@searched.search_term.downcase}%"))).to_a %>
 <% @full_names = User.where(active: true).where("first_name || ' ' || last_name LIKE '%#{@searched.search_term}%'") %>
 <% unless @full_names.empty? %>
 <% @full_names.each do |result| %>
 <% @user_results << result %>
 <% end %>
 <% end %>
-<% @skill_results = UserSkill.where(active: true).where("name LIKE ?", "%#{@searched.search_term}%") %>
+<% s = UserSkill.arel_table %>
+<% @skill_results = UserSkill.where(active: true).where(s[:name].lower.matches("%#{@searched.search_term.downcase}%")) %>
 
 <% if @team_results.empty? && @user_results.empty? && @skill_results.empty? %>
 <div class="col-12 text-center text-muted">
