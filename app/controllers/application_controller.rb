@@ -22,26 +22,8 @@ class ApplicationController < ActionController::Base
 
   def set_manager_permission
     @has_manager_permission = false
-    if Team.all.where(active: true).count == 0
-      @managers = []
+    if Team.all.where(active: true).count == 0 || @current_user.is_manager
       @has_manager_permission = true
-    else
-      @managers = User.all.where(team_id: @team.id, is_manager: true).to_a
-      unless @team.parent_team_id.nil?
-      parent_team = Team.find_by(id: @team.parent_team_id)
-        while !parent_team.nil?
-          managers = User.all.where(team_id: parent_team.id, is_manager: true)
-          managers.each do |manager|
-            @managers << manager
-          end
-          parent_team = Team.find_by(id: parent_team.parent_team_id)
-        end
-      end
-      @managers.each do |manager|
-        if @current_user == manager
-          @has_manager_permission = true
-        end
-      end
     end
   end
 
